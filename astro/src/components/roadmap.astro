@@ -1,0 +1,147 @@
+---
+
+---
+
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IsFor Pusat Riset Informatika</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-20px);
+        }
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 0.5;
+        }
+        50% {
+          opacity: 0.8;
+        }
+      }
+
+      @keyframes slideInLeft {
+        from {
+          opacity: 0;
+          transform: translateX(-50px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
+      @keyframes slideInRight {
+        from {
+          opacity: 0;
+          transform: translateX(50px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
+      .animate-float {
+        animation: float 6s ease-in-out infinite;
+      }
+
+      .animate-slide-left {
+        animation: slideInLeft 0.8s ease-out forwards;
+      }
+
+      .animate-slide-right {
+        animation: slideInRight 0.8s ease-out forwards;
+      }
+
+      .swiss-grid {
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        gap: 1rem;
+      }
+
+      @media (max-width: 768px) {
+        .swiss-grid {
+          gap: 2rem;
+        }
+      }
+
+      .typography-display {
+        font-family: "Space Grotesk", sans-serif;
+      }
+
+      .typography-body {
+        font-family: "Inter", sans-serif;
+      }
+
+      .btn-primary {
+        transition: all 0.3s ease;
+        transform-origin: center;
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-2px) scale(1.02);
+      }
+
+      .illustration-wrapper {
+        position: relative;
+      }
+
+      .illustration-wrapper::before {
+        content: "";
+        position: absolute;
+        top: -10%;
+        right: -10%;
+        width: 70%;
+        height: 70%;
+        background: #3b82f6;
+        opacity: 0.1;
+        border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+        z-index: -1;
+        animation: pulse 10s ease-in-out infinite;
+      }
+
+      @keyframes blob {
+        0%,
+        100% {
+          transform: translate(0, 0) scale(1);
+        }
+        25% {
+          transform: translate(20px, -20px) scale(1.1);
+        }
+        50% {
+          transform: translate(-20px, 20px) scale(0.9);
+        }
+        75% {
+          transform: translate(20px, 20px) scale(1.1);
+        }
+      }
+
+      .animate-blob {
+        animation: blob 7s infinite;
+      }
+
+      .animation-delay-2000 {
+        animation-delay: 2s;
+      }
+    </style>
+<section class="min-h-screen relative overflow-hidden pt-16 md:pt-24 pb-16">
+    <div class="container mx-auto px-4 md:px-6 lg:px-12">
+        <img src="/images/roadmap.png" alt="roadmap">
+    </div>
+
+</section>
