@@ -1,5 +1,6 @@
 -- Membuat database
-CREATE DATABASE isfor;
+CREATE
+DATABASE isfor;
 GO
 
 -- Menggunakan database
@@ -13,6 +14,13 @@ CREATE TABLE role
     role_name VARCHAR(50)
 );
 
+
+-- Menambahkan role 'admin' dan 'user' ke tabel role
+INSERT INTO role (role_name)
+VALUES ('admin');
+INSERT INTO role (role_name)
+VALUES ('user');
+
 -- Membuat tabel users
 CREATE TABLE users
 (
@@ -20,7 +28,7 @@ CREATE TABLE users
     username VARCHAR(50),
     password VARCHAR(255),
     email    VARCHAR(100),
-    role_id  INT,
+    role_id  INT DEFAULT 2,
     CONSTRAINT fk_role FOREIGN KEY (role_id) REFERENCES role (role_id)
 );
 

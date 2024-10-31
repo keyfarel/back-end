@@ -1,12 +1,7 @@
 <?php
 
-// Start session if needed
 session_start();
 
-// Autoload classes using Composer (if you use Composer)
-// require '../vendor/autoload.php';
-
-// Include the necessary files if not using Composer
 require_once __DIR__ . '/../app/controllers/RegisterController.php';
 require_once __DIR__ . '/../app/controllers/LoginController.php';
 
@@ -25,9 +20,14 @@ switch ($page) {
         $controller->login();
         break;
 
-    case 'dashboard':
-        require_once __DIR__ . '/../app/views/dashboard.php';
+    case 'admin_dashboard':
+        require_once __DIR__ . '/../app/views/admin_dashboard.php';
         break;
+
+    case 'user_dashboard':
+        require_once __DIR__ . '/../app/views/user_dashboard.php';
+        break;
+
 
 //    default:
 //        $controller = new \app\controllers\LoginController();

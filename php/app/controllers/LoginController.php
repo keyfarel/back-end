@@ -19,6 +19,8 @@ class LoginController
         $this->loginService = new \app\services\LoginService($this->db);
     }
 
+    // app/controllers/LoginController.php
+
     public function login(): void
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -27,11 +29,19 @@ class LoginController
 
             $user = $this->loginService->login($username, $password);
             if ($user) {
-                session_start();
+                if (session_status() === PHP_SESSION_NONE) {
+                    session_start();
+                }
                 session_regenerate_id(true);
                 $_SESSION['user_id'] = $user['user_id'];
                 $_SESSION['username'] = $user['username'];
-                header('Location: ../views/dashboard.php');
+
+                // Redirect based on role
+                if ($user['role_id'] == 1) {
+                    header('Location: ../public/index.php?page=admin_dashboard');
+                } elseif ($user['role_id'] == 2) {
+                    header('Location: ../public/index.php?page=user_dashboard');
+                }
             } else {
                 require_once __DIR__ . '/../views/error.php';
             }
