@@ -6,7 +6,7 @@ require_once __DIR__ . '/../app/controllers/RegisterController.php';
 require_once __DIR__ . '/../app/controllers/LoginController.php';
 
 // Simple routing logic
-$page = $_GET['page'] ?? 'register';  // Default page is 'register'
+$page = $_POST['page'] ?? 'register';  // Default page is 'register'
 
 // Route the request to the appropriate controller
 switch ($page) {
@@ -28,8 +28,8 @@ switch ($page) {
         require_once __DIR__ . '/../app/views/user_dashboard.php';
         break;
 
-//    default:
-//        $controller = new \app\controllers\LoginController();
-//        $controller->login();
-//        break;
+    default:
+        echo "404 Page Not Found";
+        break;
+
 }

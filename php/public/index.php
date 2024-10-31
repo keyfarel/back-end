@@ -28,9 +28,8 @@ switch ($page) {
         require_once __DIR__ . '/../app/views/user_dashboard.php';
         break;
 
+    default:
+        echo "404 Page Not Found";
+        break;
 
-//    default:
-//        $controller = new \app\controllers\LoginController();
-//        $controller->login();
-//        break;
 }

@@ -41,7 +41,7 @@ class RegisterService
         }
 
         // Insert new user with default role_id = 2
-        $query = "INSERT INTO " . $this->table . " (username, email, password, role_id) VALUES (?, ?, ?, 2)";
+        $query = "INSERT INTO " . $this->table . " (username, email, password) VALUES (?, ?, ?)";
         $stmt = $this->connection->prepare($query);
 
         try {
