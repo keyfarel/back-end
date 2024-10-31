@@ -14,6 +14,7 @@ class RegisterService
         $this->table = 'users';
     }
 
+    // RegisterService.php
     public function register(string $username, string $email, string $password): bool
     {
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
@@ -39,8 +40,8 @@ class RegisterService
             return false; // User with the same username or email already exists
         }
 
-        // Insert new user into database
-        $query = "INSERT INTO " . $this->table . " (username, email, password) VALUES (?, ?, ?)";
+        // Insert new user with default role_id = 2
+        $query = "INSERT INTO " . $this->table . " (username, email, password, role_id) VALUES (?, ?, ?, 2)";
         $stmt = $this->connection->prepare($query);
 
         try {
