@@ -5,7 +5,7 @@ namespace app\controllers;
 use app\services\LoginService;
 
 require_once __DIR__ . '/../services/LoginService.php';
-require_once __DIR__ . '/../configurations/Connection.php';
+require_once __DIR__ . '/../config/Connection.php';
 
 class LoginController
 {
@@ -14,7 +14,7 @@ class LoginController
 
     public function __construct()
     {
-        $database = new \app\configurations\Connection();
+        $database = new \app\config\Connection();
         $this->db = $database->getConnection();
         $this->loginService = new \app\services\LoginService($this->db);
     }
@@ -38,9 +38,9 @@ class LoginController
 
                 // Redirect based on role
                 if ($user['role_id'] == 1) {
-                    header('Location: index.php?page=admin_dashboard');
+                    header('Location: /isFor-website/public/index.php?page=admin_dashboard');
                 } elseif ($user['role_id'] == 2) {
-                    header('Location: index.php?page=user_dashboard');
+                    header('Location: /isFor-website/public/index.php?page=user_dashboard');
                 }
             } else {
                 require_once __DIR__ . '/../views/error.php';

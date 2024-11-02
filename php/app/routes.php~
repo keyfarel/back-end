@@ -1,0 +1,34 @@
+<?php
+
+use app\controllers\RegisterController;
+use app\controllers\LoginController;
+
+require_once __DIR__ . '/controllers/RegisterController.php';
+require_once __DIR__ . '/controllers/LoginController.php';
+
+function route($page)
+{
+    switch ($page) {
+        case 'register':
+            $controller = new RegisterController();
+            $controller->register();
+            break;
+
+        case 'login':
+            $controller = new LoginController();
+            $controller->login();
+            break;
+
+        case 'admin_dashboard':
+            require_once __DIR__ . '/views/admin_dashboard.php';
+            break;
+
+        case 'user_dashboard':
+            require_once __DIR__ . '/views/user_dashboard.php';
+            break;
+
+        default:
+            echo "404 Page Not Found";
+            break;
+    }
+}
