@@ -1,9 +1,0 @@
-<?php
-
-session_start();
-require_once __DIR__ . '/../app/routes.php';
-
-$page = $_GET['page'] ?? 'register';  // Default page is 'register'
-
-// Call the route function with the requested page
-route($page);
