@@ -5,7 +5,7 @@ namespace app\controllers;
 use app\services\RegisterService;
 
 require_once __DIR__ . '/../services/RegisterService.php';
-require_once __DIR__ . '/../configurations/Connection.php';
+require_once __DIR__ . '/../config/Connection.php';
 
 class RegisterController
 {
@@ -14,7 +14,7 @@ class RegisterController
 
     public function __construct()
     {
-        $database = new \app\configurations\Connection();
+        $database = new \app\config\Connection();
         $this->db = $database->getConnection();
         $this->registerService = new \app\services\RegisterService($this->db);
     }
@@ -36,7 +36,7 @@ class RegisterController
                 $register_success = $this->registerService->register($username, $email, $password);
                 if ($register_success) {
                     // Redirect to login after successful registration
-                    header('Location: ../public/index.php?page=login');
+                    header('Location: /isFor-website/public/index.php?page=login');
                     exit();
                 } else {
                     require_once __DIR__ . '/../views/error_register.php';
