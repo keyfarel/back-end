@@ -3,7 +3,7 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 if (!isset($_SESSION['user_id'])) {
-    header('Location: ../public/index.php?page=login');  // Redirect ke login jika belum login
+    header('Location: /isFor-website/public/index.php?page=login');  // Redirect ke login jika belum login
     exit();
 }
 ?>
