@@ -31,9 +31,6 @@
         </div>
         <button type="submit" class="submit-btn">Register</button>
     </form>
-    <div class="login-link">
-        Already have an account? <a href="/isFor-website/public/index.php?page=login">Login</a>
-    </div>
 
 </div>
 </body>

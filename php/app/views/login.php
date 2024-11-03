@@ -24,9 +24,6 @@
         </div>
         <button type="submit" class="submit-btn">Login</button>
     </form>
-    <div class="register-link">
-        Don't have an account? <a href="/isFor-website/public/index.php?page=register">Register</a>
-    </div>
 </div>
 </body>
 
