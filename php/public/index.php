@@ -1,9 +1,12 @@
 <?php
 
-session_start();
-require_once __DIR__ . '/../app/routes.php';
+require_once __DIR__ . '/../app/helpers/SessionHelper.php';
+require_once __DIR__ . '/../app/controllers/LoginController.php';
+require_once __DIR__ . '/../app/controllers/RegisterController.php';
+require_once __DIR__ . '/../app/Router.php';
 
-$page = $_GET['page'] ?? 'login';  // Halaman default adalah 'register'
+use app\Router;
 
-// Memanggil fungsi route dengan parameter page
-route($page);
+$page = $_GET['page'] ?? 'login';
+$router = new Router();
+$router->route($page);
