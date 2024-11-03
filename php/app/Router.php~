@@ -2,45 +2,52 @@
 
 namespace app;
 
+require_once __DIR__ . '/controllers/RegisterController.php';
+require_once __DIR__ . '/controllers/LoginController.php';
+require_once __DIR__ . '/helpers/SessionHelper.php';
+
 use app\controllers\RegisterController;
 use app\controllers\LoginController;
 use app\helpers\SessionHelper;
 
 class Router
 {
-    private $routes = [
-        'register' => [RegisterController::class, 'register', SessionHelper::ROLE_ADMIN],
-        'login' => [LoginController::class, 'login', null],
-        'admin_dashboard' => ['views/admin_dashboard.php', SessionHelper::ROLE_ADMIN],
-        'user_dashboard' => ['views/user_dashboard.php', SessionHelper::ROLE_USER],
-    ];
-
     public function route(string $page): void
     {
         SessionHelper::initSession();
         SessionHelper::checkSessionTimeout();
 
-        if (isset($this->routes[$page])) {
-            $route = $this->routes[$page];
-            $roleId = $route[2] ?? null;
+        switch ($page) {
+            case 'register':
+                SessionHelper::redirectIfNotLoggedInOrNotAdmin(1);
+                $controller = new RegisterController();
+                $controller->register();
+                break;
 
-            if ($roleId !== null) {
-                SessionHelper::redirectIfNotLoggedInOrNotAdmin($roleId);
-            }
+            case 'login':
+                SessionHelper::redirectIfLoggedIn();
+                $controller = new LoginController();
+                $controller->login();
+                break;
 
-            // Periksa apakah rute adalah controller atau file view
-            if (is_string($route[0])) {
-                // Jika berupa view, sertakan file
-                require_once __DIR__ . '/' . $route[0];
-            } else {
-                // Jika berupa controller, panggil method yang sesuai
-                $controller = new $route[0]();
-                $controller->{$route[1]}();
-            }
-        } else {
-            // Tampilkan halaman error jika rute tidak ditemukan
-            header('HTTP/1.0 404 Not Found');
-            require_once __DIR__ . '/views/error.php';
+            case 'logout':
+                SessionHelper::logout();
+                break;
+
+            case 'admin_dashboard':
+                SessionHelper::redirectIfNotLoggedInOrNotAdmin(1);
+                require_once __DIR__ . '/views/admin_dashboard.php';
+                break;
+
+            case 'user_dashboard':
+                SessionHelper::redirectIfNotLoggedInOrNotAdmin(2);
+                require_once __DIR__ . '/views/user_dashboard.php';
+                break;
+
+            default:
+                header('HTTP/1.0 404 Not Found');
+                require_once __DIR__ . '/views/error.php';
+                break;
         }
     }
 }

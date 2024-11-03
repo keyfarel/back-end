@@ -2,10 +2,6 @@
 
 namespace app;
 
-require_once __DIR__ . '/controllers/RegisterController.php';
-require_once __DIR__ . '/controllers/LoginController.php';
-require_once __DIR__ . '/helpers/SessionHelper.php';
-
 use app\controllers\RegisterController;
 use app\controllers\LoginController;
 use app\helpers\SessionHelper;
@@ -25,8 +21,13 @@ class Router
                 break;
 
             case 'login':
+                SessionHelper::redirectIfLoggedIn();
                 $controller = new LoginController();
                 $controller->login();
+                break;
+
+            case 'logout':
+                SessionHelper::logout();
                 break;
 
             case 'admin_dashboard':
