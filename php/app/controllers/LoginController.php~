@@ -44,7 +44,7 @@ class LoginController
                     exit(); // Tambahkan exit() di sini
                 } elseif ($user['role_id'] == 2) {
                     header('Location: /isFor-website/public/index.php?page=user_dashboard');
-                    exit();
+                    exit(); 
                 }
 
             } else {
