@@ -13,7 +13,6 @@ function route($page): void
 
     switch ($page) {
         case 'register':
-            redirectIfNotAdmin(); // Hanya admin yang dapat mengakses
             $controller = new RegisterController();
             $controller->register();
             break;
