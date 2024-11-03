@@ -5,7 +5,8 @@ namespace app\helpers;
 class SessionHelper
 {
     private const BASE_URL = '/isFor-website/php/public/index.php';
-    private const SESSION_TIMEOUT = 1800;
+    private const SESSION_TIMEOUT = 3600;
+    private const SESSION_WARNING = 3300;
 
     public static function initSession(): void
     {
@@ -23,14 +24,43 @@ class SessionHelper
         }
     }
 
+    public static function redirectIfLoggedIn(): void
+    {
+        self::initSession();
+        if (isset($_SESSION['user_id'])) {
+            // Redirect berdasarkan role_id
+            if ($_SESSION['role_id'] == 1) {
+                header("Location: " . self::BASE_URL . "?page=admin_dashboard");
+            } elseif ($_SESSION['role_id'] == 2) {
+                header("Location: " . self::BASE_URL . "?page=user_dashboard");
+            }
+            exit();
+        }
+    }
+
     public static function checkSessionTimeout(): void
     {
-        if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > self::SESSION_TIMEOUT)) {
-            session_unset();
-            session_destroy();
-            header("Location: " . self::BASE_URL . "?page=login");
-            exit();
+        if (isset($_SESSION['LAST_ACTIVITY'])) {
+            $timeInactive = time() - $_SESSION['LAST_ACTIVITY'];
+            if ($timeInactive > self::SESSION_TIMEOUT) {
+                session_unset();
+                session_destroy();
+                header("Location: " . self::BASE_URL . "?page=login");
+                exit();
+            } elseif ($timeInactive > self::SESSION_WARNING) {
+                echo "<script>alert('Sesi Anda akan segera berakhir, silakan perbarui.');</script>";
+            }
         }
         $_SESSION['LAST_ACTIVITY'] = time();
     }
+
+    public static function logout(): void
+    {
+        self::initSession();
+        session_unset();
+        session_destroy();
+        header("Location: " . self::BASE_URL . "?page=login");
+        exit();
+    }
+
 }

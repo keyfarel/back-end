@@ -5,7 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+          rel="stylesheet">
     <link rel="stylesheet" href="/Css/register.css">
 </head>
 <body>
@@ -34,17 +35,15 @@
         </div>
 
         <div class="form-group">
-            <label for="confirm_password" class="form-label">Confirm password</label>
-            <input type="password" name="confirm_password" id="confirm_password" class="form-input" required placeholder="Confirm password">
-        </div>
-
-        <div class="form-group">
-            <label for="role" class="form-label">Role</label>
+            <label for="role" class="form-label">Peran</label>
             <select name="role_id" id="role" class="form-input" required>
                 <option value="2" selected>Pengguna</option>
-                <option value="1">Admin</option>
+                <?php if ($_SESSION['role_id'] == 1): ?>
+                    <option value="1">Admin</option>
+                <?php endif; ?>
             </select>
         </div>
+
 
         <button type="submit" class="submit-btn">Register</button>
     </form>

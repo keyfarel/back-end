@@ -5,7 +5,7 @@ namespace app\controllers;
 use app\services\LoginService;
 
 require_once __DIR__ . '/../services/LoginService.php';
-require_once __DIR__ . '/../config/Connection.php';
+require_once __DIR__ . '/../configs/Connection.php';
 
 class LoginController
 {
@@ -14,7 +14,7 @@ class LoginController
 
     public function __construct()
     {
-        $database = new \app\config\Connection();
+        $database = new \app\configs\Connection();
         $this->db = $database->getConnection();
         $this->loginService = new \app\services\LoginService($this->db);
     }

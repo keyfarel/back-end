@@ -10,4 +10,4 @@ if (!isset($_SESSION['user_id'])) {
 
 <!-- Konten Dashboard Anda -->
 <h1>Welcome to the Dashboard, <?php echo htmlspecialchars($_SESSION['username']); ?>!</h1>
-<br> <a href="/isFor-website/php/public/index.php?page=logout">Logout</a>
+<br><a href="/isFor-website/php/public/index.php?page=logout">Logout</a>
