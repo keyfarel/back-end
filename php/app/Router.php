@@ -32,12 +32,44 @@ class Router
 
             case 'admin_dashboard':
                 SessionHelper::redirectIfNotLoggedInOrNotAdmin(1);
-                require_once __DIR__ . '/views/admin_dashboard.php';
+                $controller = new RegisterController();
+                $controller->listUsers(); // Panggil listUsers untuk mengirim data ke tampilan
                 break;
+
+            case 'add_user':
+                SessionHelper::redirectIfNotLoggedInOrNotAdmin(1);
+                $controller = new RegisterController();
+                $controller->showAddUserForm(); // Menampilkan form add user
+                break;
+
+            case 'process_add_user':
+                SessionHelper::redirectIfNotLoggedInOrNotAdmin(1);
+                $controller = new RegisterController();
+                $controller->register(); // Memanggil fungsi register untuk menambahkan user baru
+                break;
+
 
             case 'user_dashboard':
                 SessionHelper::redirectIfNotLoggedInOrNotAdmin(2);
                 require_once __DIR__ . '/views/user_dashboard.php';
+                break;
+
+            case 'edit_user':
+                SessionHelper::redirectIfNotLoggedInOrNotAdmin(1);
+                $controller = new RegisterController();
+                $controller->editUser();
+                break;
+
+            case 'update_user':
+                SessionHelper::redirectIfNotLoggedInOrNotAdmin(1);
+                $controller = new RegisterController();
+                $controller->updateUser();
+                break;
+
+            case 'delete_user':
+                SessionHelper::redirectIfNotLoggedInOrNotAdmin(1);
+                $controller = new RegisterController();
+                $controller->deleteUser();
                 break;
 
             default:
