@@ -9,7 +9,7 @@
         <div class="organization-name">Pusat Riset<br>Informatika</div>
     </div>
     <h2>User Register</h2>
-    <form action="../../public/index.php?page=register" method="POST">
+    <form action="<?= BASEURL; ?>/register/register" method="POST">
         <div class="form-row">
             <div class="form-group form-group-half">
                 <label for="username" class="form-label">Username</label>
@@ -27,7 +27,7 @@
         <div class="form-group">
             <label for="confirm_password" class="form-label">Confirm password</label>
             <input type="password" name="confirm_password" id="confirm_password" class="form-input" required
-                   placeholder="Confirm password">
+                placeholder="Confirm password">
         </div>
         <button type="submit" class="submit-btn">Register</button>
     </form>

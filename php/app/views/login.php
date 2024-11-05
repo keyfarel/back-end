@@ -8,7 +8,7 @@
         <div class="organization-name">Pusat Riset<br>Informatika</div>
     </div>
     <h2>User Login</h2>
-    <form action="../../public/index.php?page=login" method="POST" class="login-form">
+    <form action="<?= BASEURL; ?>/login/login" method="POST" class="login-form">
         <div class="form-group">
             <label for="username" class="form-label">Username</label>
             <input type="text" name="username" id="username" class="form-input" required
