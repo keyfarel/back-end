@@ -1,26 +1,26 @@
 <?php
 
-namespace app\configs;
+namespace app\config;
+use PDO;
+use PDOException;
 
-class Connection
-{
-    private ?\mysqli $connection = null;
+class Connection{
     private string $host = "localhost";
     private string $db_name = "isfor";
     private string $username = "root";
     private string $password = "";
+    private $db;
 
-    public function getConnection(): ?\mysqli
-    {
+    public function getConnection() {
+        $this->db = null;
+
         try {
-            $this->connection = new \mysqli($this->host, $this->username, $this->password, $this->db_name);
-            if ($this->connection->connect_error) {
-                throw new \Exception("Connection failed: " . $this->connection->connect_error);
-            }
-        } catch (\Exception $e) {
-            echo "Connection error: " . $e->getMessage();
+            $this->db = new PDO("mysql:host=" . $this->host . ";dbname=" . $this->db_name, $this->username, $this->password);
+            $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        } catch(PDOException $exception) {
+            echo "Connection error: " . $exception->getMessage();
         }
 
-        return $this->connection;
+        return $this->db;
     }
 }

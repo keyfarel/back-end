@@ -16,8 +16,7 @@
         <div class="organization-name">Pusat Riset<br>Informatika</div>
     </div>
     <h2>User Register</h2>
-
-    <form action="../../public/index.php?page=register" method="POST">
+    <form action="<?= BASEURL; ?>/register/register" method="POST">
         <div class="form-row">
             <div class="form-group form-group-half">
                 <label for="username" class="form-label">Username</label>
@@ -35,13 +34,9 @@
         </div>
 
         <div class="form-group">
-            <label for="role" class="form-label">Peran</label>
-            <select name="role_id" id="role" class="form-input" required>
-                <option value="2" selected>Pengguna</option>
-                <?php if ($_SESSION['role_id'] == 1): ?>
-                    <option value="1">Admin</option>
-                <?php endif; ?>
-            </select>
+            <label for="confirm_password" class="form-label">Confirm password</label>
+            <input type="password" name="confirm_password" id="confirm_password" class="form-input" required
+                   placeholder="Confirm password">
         </div>
 
 
