@@ -34,5 +34,9 @@ class User_Model{
         $this->db->query("SELECT * FROM users WHERE username = :username");
         $this->db->bind(':username', $username);
         return $this->db->single();
+        
+        // $nilai = $this->db->single();
+        // var_dump($nilai);
+        // exit();
     }
 }

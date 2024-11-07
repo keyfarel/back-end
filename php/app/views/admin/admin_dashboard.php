@@ -6,6 +6,7 @@
     <title>Document</title>
 </head>
 <body>
-    Halooooooooooo
+    <h1>Welcome to Admin Dashboard</h1>
+    <button><a href="<?= BASEURL; ?>/login/logout">keluar</a></button>
 </body>
 </html>
