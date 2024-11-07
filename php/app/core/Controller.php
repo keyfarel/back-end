@@ -18,4 +18,22 @@ class Controller{
             header('Location: ' . BASEURL . '/login');
         }
     }
+
+    public function checkRole(){
+        require_once '../app/helpers/Middleware.php';
+        $middleware = new Middleware();
+        return $middleware->checkRole();
+    }
+
+    public function saveLastVisitedPage(){
+        require_once '../app/helpers/Middleware.php';
+        $middleware = new Middleware();
+        return $middleware->saveLastVisitedPage();
+    }
+    
+    public function getLastVisitedPage(){
+        require_once '../app/helpers/Middleware.php';
+        $middleware = new Middleware();
+        return $middleware->getLastVisitedPage();
+    }
 }

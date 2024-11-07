@@ -3,6 +3,12 @@
 class DashboardUser extends Controller{
     public function index(){
         $this->checkLogin();
-        $this->view('user/user_dashboard');
+        $role = $this->checkRole();
+        if($role == 2){
+            $this->saveLastVisitedPage();
+            $this->view('user/user_dashboard');
+        }else{
+            header('Location: ' . $this->getLastVisitedPage());
+        }
     }
 }
