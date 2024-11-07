@@ -1,7 +1,14 @@
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
-      rel="stylesheet">
-<link rel="stylesheet" href="/Css/register.css">
-<link rel="stylesheet" href="/Css/logincss.css">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+          rel="stylesheet">
+    <link rel="stylesheet" href="/Css/register.css">
+</head>
 <body>
 <div class="login-container">
     <div class="header">
@@ -20,17 +27,22 @@
                 <input type="email" name="email" id="email" class="form-input" required placeholder="Email">
             </div>
         </div>
+
         <div class="form-group">
             <label for="password" class="form-label">Password</label>
             <input type="password" name="password" id="password" class="form-input" required placeholder="Password">
         </div>
+
         <div class="form-group">
             <label for="confirm_password" class="form-label">Confirm password</label>
             <input type="password" name="confirm_password" id="confirm_password" class="form-input" required
                 placeholder="Confirm password">
         </div>
+
+
         <button type="submit" class="submit-btn">Register</button>
     </form>
 
 </div>
 </body>
+</html>
