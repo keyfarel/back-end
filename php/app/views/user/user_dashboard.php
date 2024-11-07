@@ -1,3 +1,6 @@
+<!-- Konten Dashboard Anda -->
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,6 +9,7 @@
     <title>Document</title>
 </head>
 <body>
-    Halooooooooooo
+    <h1>Welcome to the Dashboard,<?= $_SESSION['username'] ?>!</h1>
+    <button><a href="<?= BASEURL; ?>/login/logout">keluar</a></button>
 </body>
 </html>

@@ -2,7 +2,7 @@
 
 class Register extends Controller{
     public function index(){
-        $this->view("register");
+        $this->view("admin/addUser");
     }
 
     public function register(){
