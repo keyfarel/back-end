@@ -12,7 +12,7 @@ class Controller{
     }
 
     public function checkLogin(){
-        require_once '../app/helper/Middleware.php';
+        require_once '../app/helpers/Middleware.php';
         $middleware = new Middleware();
         if(!$middleware->isLoggedIn()){
             header('Location: ' . BASEURL . '/login');
