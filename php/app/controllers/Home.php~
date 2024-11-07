@@ -1,0 +1,16 @@
+<?php
+
+namespace app\controllers;
+
+use app\core\Controller;
+
+class Home extends Controller
+{
+    public function index(): void
+    {
+        echo "Home index method called.";
+        $this->view('main/home');
+    }
+
+
+}

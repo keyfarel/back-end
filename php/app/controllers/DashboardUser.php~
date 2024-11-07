@@ -1,0 +1,10 @@
+<?php
+
+class DashboardUser extends Controller{
+
+    public function index(): void
+    {
+        $this->checkLogin();
+        $this->view('user/user_dashboard');
+    }
+}

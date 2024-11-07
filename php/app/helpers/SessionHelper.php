@@ -2,8 +2,6 @@
 
 namespace app\helpers;
 
-use JetBrains\PhpStorm\NoReturn;
-
 class SessionHelper
 {
     private const BASE_URL = '/isFor-website/php/public/index.php';

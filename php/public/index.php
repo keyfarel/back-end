@@ -1,12 +1,7 @@
 <?php
 
-require_once __DIR__ . '/../app/helpers/SessionHelper.php';
-require_once __DIR__ . '/../app/controllers/LoginController.php';
-require_once __DIR__ . '/../app/controllers/RegisterController.php';
-require_once __DIR__ . '/../app/Router.php';
+use app\core\App;
 
-use app\Router;
+require_once '../app/init.php';
 
-$page = $_GET['page'] ?? 'login';
-$router = new Router();
-$router->route($page);
+$app = new App;
