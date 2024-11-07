@@ -36,7 +36,7 @@
         <div class="form-group">
             <label for="confirm_password" class="form-label">Confirm password</label>
             <input type="password" name="confirm_password" id="confirm_password" class="form-input" required
-                   placeholder="Confirm password">
+                placeholder="Confirm password">
         </div>
 
 
