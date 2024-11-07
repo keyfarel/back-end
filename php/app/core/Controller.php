@@ -10,4 +10,12 @@ class Controller{
         require_once '../app/models/' . $model . '.php';
         return new $model;
     }
+
+    public function checkLogin(){
+        require_once '../app/helper/Middleware.php';
+        $middleware = new Middleware();
+        if(!$middleware->isLoggedIn()){
+            header('Location: ' . BASEURL . '/login');
+        }
+    }
 }
