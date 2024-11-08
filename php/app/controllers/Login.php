@@ -13,7 +13,7 @@ class Login extends Controller{
             //lebih baik ganti md5 ke password_bcrypt untuk keamanan
             $user = $this->model('User_Model')->getUserByUsername($username);
             if($user){
-                if (md5($password) === $user['password']) {
+                if (password_verify($password, $user['password'])) {
 
                     session_start();
                     $_SESSION['user_id'] = $user['user_id'];

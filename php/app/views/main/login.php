@@ -16,6 +16,7 @@
         <div class="organization-name">Pusat Riset<br>Informatika</div>
     </div>
     <h2>User Login</h2>
+    <a href="<?= BASEURL ?>">klik disini untuk kembali ke halaman home</a><br><br>
     <form action="<?= BASEURL; ?>/login/authentication" method="POST" class="login-form">
         <div class="form-group">
             <label for="username" class="form-label">Username</label>

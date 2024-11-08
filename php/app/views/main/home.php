@@ -12,5 +12,6 @@ echo("ini adalah halaman home");
 </head>
 <body>
     <h1>halo</h1>
+    <a href="<?= BASEURL ?>/login">klik disini untuk login</a>
 </body>
 </html>
