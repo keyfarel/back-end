@@ -1,6 +1,8 @@
 <?php
 
 class Middleware{
+    private const SESSION_TIMEOUT = 3600;
+
     function isLoggedIn() {
         session_start();
         return isset($_SESSION['user_id']);
@@ -27,6 +29,20 @@ class Middleware{
             session_start();
         }
 
-        return isset($_SESSION['last_visited']) ? $_SESSION['last_visited'] : BASEURL . '/defaultPage';
+        return isset($_SESSION['last_visited']) ? $_SESSION['last_visited'] : BASEURL . '/home';
+    }
+
+    public static function checkSessionTimeout()
+    {
+        if (isset($_SESSION['LAST_ACTIVITY'])) {
+            $timeInactive = time() - $_SESSION['LAST_ACTIVITY'];
+            if ($timeInactive > self::SESSION_TIMEOUT) {
+                session_unset();
+                session_destroy();
+                header("Location: " . BASEURL . "/home");
+                exit();
+            }
+        }
+        $_SESSION['LAST_ACTIVITY'] = time();
     }
 }

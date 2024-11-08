@@ -11,29 +11,31 @@ class Controller{
         return new $model;
     }
 
-    public function checkLogin(){
+    public function middleware(){
         require_once '../app/helpers/Middleware.php';
-        $middleware = new Middleware();
-        if(!$middleware->isLoggedIn()){
+        $middleware = new Middleware;
+        return $middleware;
+    }
+
+    public function checkLogin(){
+        if(!$this->middleware()->isLoggedIn()){
             header('Location: ' . BASEURL . '/login');
         }
     }
 
     public function checkRole(){
-        require_once '../app/helpers/Middleware.php';
-        $middleware = new Middleware();
-        return $middleware->checkRole();
+        return $this->middleware()->checkRole();
     }
 
     public function saveLastVisitedPage(){
-        require_once '../app/helpers/Middleware.php';
-        $middleware = new Middleware();
-        return $middleware->saveLastVisitedPage();
+        return $this->middleware()->saveLastVisitedPage();
     }
     
     public function getLastVisitedPage(){
-        require_once '../app/helpers/Middleware.php';
-        $middleware = new Middleware();
-        return $middleware->getLastVisitedPage();
+        return $this->middleware()->getLastVisitedPage();
+    }
+
+    public function checkSessionTimeOut(){
+        return $this->middleware()->checkSessionTimeOut();
     }
 }
