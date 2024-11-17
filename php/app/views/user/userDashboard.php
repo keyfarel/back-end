@@ -1,6 +1,3 @@
-<!-- Konten Dashboard Anda -->
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,7 +6,13 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>Welcome to the Dashboard,<?= $_SESSION['username'] ?>!</h1>
+    <h1>Welcome to dashboard user<?= $data['user']['username'] ?></h1>
+    <img src="../app/img/profile/<?= $data['user']['profile_picture'] ?>" alt="testing" width="500px">
+
+    <ul>
+        <li><a href=""></a></li>
+    </ul>
+
     <button><a href="<?= BASEURL; ?>/login/logout">keluar</a></button>
 </body>
 </html>

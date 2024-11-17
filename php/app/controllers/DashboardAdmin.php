@@ -7,7 +7,10 @@ class DashboardAdmin extends Controller{
         $this->checkSessionTimeOut();
         if($role == 1){
             $this->saveLastVisitedPage();
-            $this->view('admin/admin_dashboard');
+            $data['no'] = 1;
+            $data['user'] = $this->model('UsersModel')->getUserByUsername($_SESSION['username']);
+            $data['allUser'] = $this->model('UsersModel')->getUser();
+            $this->view('admin/adminDashboard', $data);
         }else{
             header('Location: ' . $this->getLastVisitedPage());
         }

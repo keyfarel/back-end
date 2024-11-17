@@ -4,7 +4,7 @@ class Home extends Controller{
 
     // Fungsi untuk menginisialisasi user default
     private function initializeDefaultUser() {
-        $userModel = $this->model('User_Model');
+        $userModel = $this->model('UsersModel');
         
         // Cek apakah user sudah ada
         if (!$userModel->checkUserExists()) {

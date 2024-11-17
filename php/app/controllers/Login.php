@@ -7,11 +7,11 @@ class Login extends Controller{
 
     public function authentication() {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $username = $_POST['username'];
+            $username = htmlspecialchars($_POST['username']);
             $password = $_POST['password'];
     
             //lebih baik ganti md5 ke password_bcrypt untuk keamanan
-            $user = $this->model('User_Model')->getUserByUsername($username);
+            $user = $this->model('UsersModel')->getUserByUsername($username);
             if($user){
                 if (password_verify($password, $user['password'])) {
 
