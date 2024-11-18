@@ -207,7 +207,7 @@
             <!-- User Profile -->
             <div class="profile-section border-t border-gray-200 p-4">
                 <div class="flex items-center space-x-3">
-                    <img id="userAvatar" src="" alt="User avatar" class="w-10 h-10 rounded-full border-2 border-blue-700">
+                    <img id="userAvatar" src="<?= PHOTOPROFILE . $_SESSION['profile_picture']?>" alt="User avatar" class="w-10 h-10 rounded-full border-2 border-blue-700">
                     <div>
                         <p class="text-sm font-medium text-gray-900" id="username"></p>
                         <p class="text-xs text-gray-500" id="userRole"></p>
