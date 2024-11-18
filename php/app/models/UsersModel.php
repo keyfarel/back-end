@@ -19,7 +19,7 @@ class UsersModel{
     }
 
     // Fungsi untuk menambahkan user default
-    public function addDefaultUser() {
+    public function zaddDefaultUser() {
         // Data user default
         $username = 'admin';
         $email = 'admin@example.com';
