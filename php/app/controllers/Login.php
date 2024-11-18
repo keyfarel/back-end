@@ -18,6 +18,7 @@ class Login extends Controller{
                     session_start();
                     $_SESSION['user_id'] = $user['user_id'];
                     $_SESSION['username'] = $user['username'];
+                    $_SESSION['profile_picture'] = $user['profile_picture'];
 
                     if($user['role_id'] == 1){
                         $_SESSION['role_id'] = $user['role_id'];
