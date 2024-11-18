@@ -5,8 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
-          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/Css/register.css">
 </head>
 <body>
@@ -15,8 +14,9 @@
         <img src="Images/polinema_logo 2.png" alt="logo" class="logo">
         <div class="organization-name">Pusat Riset<br>Informatika</div>
     </div>
-    <h2>User Register</h2>
-    <form action="<?= BASEURL; ?>/register/register" method="POST">
+    <h2>Add User</h2><br>
+    <a href="<?= BASEURL ?>/dashboardAdmin">dashboardAdmin</a><br><br>
+    <form action="<?= BASEURL; ?>/User/create" method="POST" enctype="multipart/form-data">
         <div class="form-row">
             <div class="form-group form-group-half">
                 <label for="username" class="form-label">Username</label>
@@ -34,10 +34,18 @@
         </div>
 
         <div class="form-group">
-            <label for="confirm_password" class="form-label">Confirm password</label>
-            <input type="password" name="confirm_password" id="confirm_password" class="form-input" required
-                   placeholder="Confirm password">
+            <label for="role">Pilih role user: </label>
+
+            <select name="role" id="role">
+                <option value="1">admin</option>
+                <option value="2">user</option>
+            </select>
         </div>
+
+                <div class="form-group">
+                    <label for="profile_picture">Upload profile picture:</label>
+                    <input type="file" name="profile_picture" id="profile_picture" required>
+                </div>
 
 
         <button type="submit" class="submit-btn">Register</button>

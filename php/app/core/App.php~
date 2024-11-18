@@ -1,12 +1,23 @@
 <?php
 
+<<<<<<< HEAD
 namespace app\core;
 
 class App {
+=======
+//file untuk memecah url 
+namespace app\core;
+
+use app\core\Controller;
+
+class App
+{
+>>>>>>> 65fb076e53b87291d11d0219e673203d300ca9f9
     protected mixed $controller = 'Home';
     protected string $method = 'index';
     protected array $params = [];
 
+<<<<<<< HEAD
     public function __construct() {
         $url = $this->parseURL();
 
@@ -15,6 +26,23 @@ class App {
             if (file_exists('../app/controllers/' . $url[0] . '.php')) {
                 $this->controller = $url[0];
                 unset($url[0]);
+=======
+    public function __construct()
+    {
+        $url = $this->parseURL();
+
+        //controller
+        // Controller
+        if (isset($url[0])) {
+            $controllerPath = '../app/controllers/' . $url[0] . '.php';
+            if (file_exists($controllerPath)) {
+                $this->controller = $url[0];
+                unset($url[0]);
+            } else {
+                // Debug jika file tidak ditemukan
+                echo "Controller file not found: " . realpath($controllerPath) . "<br>";
+                die();
+>>>>>>> 65fb076e53b87291d11d0219e673203d300ca9f9
             }
         }
 
@@ -35,10 +63,17 @@ class App {
         }
 
         //jalankan controller & method serta kirimkan params jika ada
+<<<<<<< HEAD
         call_user_func_array([$this->controller, $this->method], $this->params); 
     }
 
     public function parseURL(): array
+=======
+        call_user_func_array([$this->controller, $this->method], $this->params);
+    }
+
+    public function parseURL()
+>>>>>>> 65fb076e53b87291d11d0219e673203d300ca9f9
     {
         if (isset($_GET['url'])) {
             $url = rtrim($_GET['url'], '/');

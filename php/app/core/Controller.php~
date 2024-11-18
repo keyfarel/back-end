@@ -1,21 +1,33 @@
 <?php
 
 namespace app\core;
+<<<<<<< HEAD
 
 //membuat method untuk memanggil view dan model
 class Controller
 {
+=======
+//membuat method untuk memanggil view dan model
+use app\helpers\Middleware;
+
+class Controller{
+>>>>>>> 65fb076e53b87291d11d0219e673203d300ca9f9
     public function view($view, $data = []): void
     {
         require_once '../app/views/' . $view . '.php';
     }
 
+<<<<<<< HEAD
     public function model($model)
     {
+=======
+    public function model($model){
+>>>>>>> 65fb076e53b87291d11d0219e673203d300ca9f9
         require_once '../app/models/' . $model . '.php';
         return new $model;
     }
 
+<<<<<<< HEAD
     public function checkLogin(): void
     {
         require_once '../app/helpers/Middleware.php';
@@ -24,4 +36,34 @@ class Controller
             header('Location: ' . BASEURL . '/login');
         }
     }
+=======
+    public function middleware(): Middleware
+    {
+        require_once '../app/helpers/Middleware.php';
+        return new Middleware;
+    }
+
+    public function checkLogin(): void
+    {
+        if(!$this->middleware()->isLoggedIn()){
+            header('Location: ' . BASEURL . '/login');
+        }
+    }
+
+    public function checkRole(){
+        return $this->middleware()->checkRole();
+    }
+
+    public function saveLastVisitedPage(){
+        return $this->middleware()->saveLastVisitedPage();
+    }
+    
+    public function getLastVisitedPage(){
+        return $this->middleware()->getLastVisitedPage();
+    }
+
+    public function checkSessionTimeOut(){
+        return $this->middleware()->checkSessionTimeOut();
+    }
+>>>>>>> 65fb076e53b87291d11d0219e673203d300ca9f9
 }

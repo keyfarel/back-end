@@ -1,15 +1,21 @@
 <?php
 
-namespace app\controllers;
+class Home extends Controller{
 
-use app\core\Controller;
-
-class Home extends Controller
-{
-    public function index(): void
-    {
-        $this->view('main/home');
+    // Fungsi untuk menginisialisasi user default
+    private function initializeDefaultUser() {
+        $userModel = $this->model('UsersModel');
+        
+        // Cek apakah user sudah ada
+        if (!$userModel->checkUserExists()) {
+            // Jika belum ada, tambahkan user default
+            $userModel->addDefaultUser();
+        }
     }
 
+    public function index(){
+        $this->initializeDefaultUser();
+        $this->view('main/home');
+    }
 
 }

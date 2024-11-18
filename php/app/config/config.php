@@ -1,9 +1,10 @@
 <?php 
 //menginisialisasi database mulai dari host username password dan name agar tidak tertulis di connection
 
-const BASEURL = 'http://localhost/IsFor/php/public';
+define('BASEURL', 'http://localhost/IsFor-website/php/public');
+define('PHOTOPROFILE', 'http://localhost/IsFor-website/php/app/img/profile/');
 
-const DB_HOST = 'localhost';
-const DB_USER = 'root';
-const DB_PASS = '';
-const DB_NAME = 'isfor';
+define('DB_HOST', 'localhost');
+define('DB_USER', 'root');
+define('DB_PASS', '');
+define('DB_NAME', 'isfor'); 

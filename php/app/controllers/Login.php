@@ -14,17 +14,18 @@ class Login extends Controller{
     public function authentication(): void
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $username = $_POST['username'];
+            $username = htmlspecialchars($_POST['username']);
             $password = $_POST['password'];
     
             //lebih baik ganti md5 ke password_bcrypt untuk keamanan
-            $user = $this->model('User_Model')->getUserByUsername($username);
+            $user = $this->model('UsersModel')->getUserByUsername($username);
             if($user){
-                if (md5($password) === $user['password']) {
+                if (password_verify($password, $user['password'])) {
 
                     session_start();
                     $_SESSION['user_id'] = $user['user_id'];
                     $_SESSION['username'] = $user['username'];
+                    $_SESSION['profile_picture'] = $user['profile_picture'];
 
                     if($user['role_id'] == 1){
                         $_SESSION['role_id'] = $user['role_id'];

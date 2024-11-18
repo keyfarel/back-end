@@ -9,6 +9,16 @@ class DashboardAdmin extends Controller
     public function index(): void
     {
         $this->checkLogin();
-        $this->view('admin/admin_dashboard');
+        $role = $this->checkRole();
+        $this->checkSessionTimeOut();
+        if($role == 1){
+            $this->saveLastVisitedPage();
+            $data['no'] = 1;
+            $data['user'] = $this->model('UsersModel')->getUserByUsername($_SESSION['username']);
+            $data['allUser'] = $this->model('UsersModel')->getUser();
+            $this->view('admin/adminDashboard', $data);
+        }else{
+            header('Location: ' . $this->getLastVisitedPage());
+        }
     }
 }
