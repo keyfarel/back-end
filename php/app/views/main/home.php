@@ -1,3 +1,6 @@
+<?php 
+    session_start(); 
+?>
 <!DOCTYPE html>
 <html lang="id" class="scroll-smooth">
 <head>
@@ -10,7 +13,11 @@
     <base href="/isfor-web/" />
 </head>
 <body class="grid-pattern">
-    <?php include_once '../app/views/assets/components/navbar.php'; ?>
+    <?php if (!isset($_SESSION['user_id'])) : ?>
+        <?php include_once '../app/views/assets/components/navbar.php'; ?>
+    <?php else : ?>
+        <?php include_once '../app/views/assets/components/navbarafterlogin.php'; ?>
+    <?php endif; ?>
     <?php include_once '../app/views/assets/components/LandingPage/hero.php'; ?>
     <div id="Sejarah">
         <?php include_once '../app/views/assets/components/LandingPage/sejarah.php'; ?>
