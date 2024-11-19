@@ -21,13 +21,30 @@
                     Memajukan riset informatika melalui inovasi dan kolaborasi.
                     Pusat dari segala penelitian terkait informatika untuk masa depan teknologi Indonesia.
                 </p>
-
-                <a href="<?= BASEURL; ?>/login" onclick="window.location.href='/isfor-web/App/views/main/login'" class="group inline-flex items-center px-8 py-4 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-all duration-300">
-                    <span>Masuk</span>
-                    <svg class="w-5 h-5 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
-                    </svg>
-                </a>
+                <?php if (!isset($_SESSION['user_id'])) : ?>
+                    <a href="<?= BASEURL; ?>/login" onclick="window.location.href='/isfor-web/App/views/main/login'" class="group inline-flex items-center px-8 py-4 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-all duration-300">
+                        <span>Masuk</span>
+                        <svg class="w-5 h-5 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                        </svg>
+                    </a>
+                    <?php else : ?>
+                        <?php if ($_SESSION['role_id'] == 1) : ?>
+                            <a href="<?= BASEURL; ?>/dashboardadmin" onclick="window.location.href='/isfor-web/App/views/main/login'" class="group inline-flex items-center px-8 py-4 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-all duration-300">
+                                <span>admin dashboard</span>
+                                <svg class="w-5 h-5 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                                </svg>
+                            </a>
+                        <?php else : ?>
+                            <a href="<?= BASEURL; ?>/dashboarduser" onclick="window.location.href='/isfor-web/App/views/main/login'" class="group inline-flex items-center px-8 py-4 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-all duration-300">
+                                <span>user dashboard</span>
+                                <svg class="w-5 h-5 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                                </svg>
+                            </a>
+                        <?php endif; ?>
+                    <?php endif;?>
             </div>
 
             <div class="col-span-12 lg:col-span-6 lg:col-start-7 mt-12 lg:mt-0">

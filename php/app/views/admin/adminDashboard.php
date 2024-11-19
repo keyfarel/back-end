@@ -142,7 +142,7 @@
 <body class="bg-gray-50">
     <div class="flex min-h-screen">
         <!-- Sidebar -->
-        <?php include_once '../app/views/assets/components/sidebar.php'; ?>
+        <?php include_once '../app/views/assets/components/AdminDashboard/sidebar.php'; ?>
 
         <!-- Main Content -->
         <main class="flex-1 ml-64 p-8">
@@ -213,7 +213,9 @@
                         </div>
                     </div>
                 </div>
-
+                
+                <button class="mb-2 px-4 py-2 text-sm font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"><a href="<?= BASEURL; ?>/User">add user</a></button>
+                
                 <!-- Recent Users -->
                 <div class="animate-slide-in">
                     <div class="bg-white rounded-xl shadow-sm border border-gray-200">
@@ -236,7 +238,7 @@
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <div class="flex items-center">
                                                 <div class="h-10 w-10 flex-shrink-0">
-                                                    <img class="h-10 w-10 rounded-full" src="<?= PHOTOPROFILE . $allUser['profile_picture']?>" alt="">
+                                                    <img class="h-10 w-10 rounded-full object-cover" src="<?= PHOTOPROFILE . $allUser['profile_picture']?>" alt="">
                                                 </div>
                                                 <div class="ml-4">
                                                     <div class="text-sm font-medium text-gray-900"><?= $allUser['username'] ?></div>

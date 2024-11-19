@@ -81,32 +81,36 @@
     </header>
     <script>
         const navItems = [
-            { name: "Beranda", href: "/" },
+            { name: "Beranda", href: "<?= BASEURL; ?>" },
             {
                 name: "Tentang Kami",
                 dropdownItems: [
-                    { name: "Sejarah", href: "#sejarah" },
-                    { name: "Visi Misi", href: "#visi-misi" },
-                    { name: "Roadmap", href: "#roadmap" },
-                    { name: "Pengelola", href: "#pengelola" },
-                    { name: "List Peneliti", href: "#list-peneliti" }
+                    { name: "Sejarah", href: "<?= BASEURL; ?>/#sejarah" },
+                    { name: "Visi Misi", href: "<?= BASEURL; ?>/#visi-misi" },
+                    { name: "Roadmap", href: "<?= BASEURL; ?>/#roadmap" },
+                    { name: "Pengelola", href: "<?= BASEURL; ?>/#pengelola" },
+                    { name: "List Peneliti", href: "<?= BASEURL; ?>/#list-peneliti" }
                 ]
             },
             {
                 name: "Riset & Publikasi",
                 dropdownItems: [
-                    { name: "Penelitian", href: "#" },
-                    { name: "Hasil Peneliti", href: "#" }
+                    { name: "Penelitian", href: "<?= BASEURL; ?>/#" },
+                    { name: "Hasil Peneliti", href: "<?= BASEURL; ?>/#" }
                 ]
             },
-            { name: "Agenda", href: "#agenda" },
-            { name: "Arsip", dropdownItems: [{ name: "Dokumen", href: "#" }] },
-            { name: "Galeri", href: "/galeri" }
+            { name: "Agenda", href: "<?= BASEURL; ?>/#agenda" },
+            { name: "Arsip", dropdownItems: [{ name: "Dokumen", href: "<?= BASEURL; ?>/#" }] },
+            { name: "Galeri", href: "<?= BASEURL; ?>/galeri" }
         ];
 
         const userMenuItems = [
-            { name: "Dashboard", href: "/admin_dashboard" },
-            { name: "Logout", href: "/" }
+            <?php if ($_SESSION['role_id'] == 1) : ?>
+                { name: "Dashboard", href: "<?= BASEURL; ?>/dashboardadmin" },
+            <?php else : ?>
+                { name: "Dashboard", href: "<?= BASEURL; ?>/dashboarduser" },
+            <?php endif; ?>
+            { name: "Logout", href: "<?= BASEURL; ?>/login/logout" }
         ];
 
         const renderNavItems = () => {
