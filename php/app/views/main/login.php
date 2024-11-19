@@ -85,7 +85,10 @@
             <!-- <button type="submit" class="submit-btn w-full text-white py-2.5 rounded-lg font-medium">
                 Masuk
             </button> -->
-            <button type="submit" >masuk</button>
+            <button type="submit" class="submit-btn bg-blue-600 text-white py-2.5 rounded-lg font-medium w-full">
+                Masuk
+            </button>
+
             <input type="hidden" name="action" value="login">
         </form>
     </div>

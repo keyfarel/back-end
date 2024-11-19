@@ -1,3 +1,5 @@
+import { BASEURL } from './config.js';
+
 function showAlert(message) {
     const alert = document.getElementById('customAlert');
     const alertMessage = document.getElementById('alertMessage');
@@ -9,7 +11,7 @@ function showAlert(message) {
     }, 3000);
 }
 
-document.getElementById('loginForm').addEventListener('submit', async function(e) {
+document.getElementById('loginForm').addEventListener('submit', async function (e) {
     e.preventDefault();
 
     const username = document.getElementById('username').value;
@@ -22,7 +24,7 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
 
     try {
         const formData = new FormData(this);
-        const response = await fetch('/App/controllers/authcontroller.php', {
+        const response = await fetch(`${BASEURL}/login/authentication`, {
             method: 'POST',
             body: formData
         });

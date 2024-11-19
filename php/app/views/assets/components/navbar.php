@@ -32,7 +32,7 @@
             <div class="flex justify-between items-center h-16">
                 <!-- Logo Section -->
                 <a href="<?= BASEURL ?>" class="flex-shrink-0 flex items-center space-x-3">
-                    <img src="<?= BASEURL;?>/assets/images/Logo1.png" alt="IsFor Logo" class="h-10 w-auto"/>
+                    <img src="<?= ASSETS; ?>/images/Logo1.png" alt="IsFor Logo" class="h-10 w-auto"/>
                     <span class="text-lg font-semibold text-blue-900">IsFor Pusat Riset Informatika</span>
                 </a>
 

@@ -1,5 +1,3 @@
-import { BASEURL } from './config.js';
-
 function showAlert(message) {
     const alert = document.getElementById('customAlert');
     const alertMessage = document.getElementById('alertMessage');
