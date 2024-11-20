@@ -6,7 +6,7 @@
     <title>Verifikasi Surat - IsFor</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="/isfor-web/App/public/assets/css/animations.css">
+    <link rel="stylesheet" href="<?= ASSETS; ?>/css/animations.css">
     <style>
         .letter-card {
             animation: slideIn 0.5s ease-out forwards;
@@ -20,7 +20,7 @@
 </head>
 <body class="bg-gray-50">
     <div class="flex">
-        <?php include '../../public/assets/components/AdminDashboard/sidebar.php'; ?>
+        <?php include ASSETS . '/components/AdminDashboard/sidebar.php'; ?>
         <div class="flex-1 min-h-screen ml-64">
             <main class="py-10 px-8">
                 <!-- Header -->
@@ -43,7 +43,7 @@
                     <?php if (empty($letters)): ?>
                     <!-- Empty State -->
                     <div class="col-span-full text-center py-16 bg-white rounded-2xl border-2 border-blue-100">
-                        <img src="/isfor-web/App/public/assets/images/empty-letters.png" alt="No Letters" class="mx-auto h-40 animate-bounce">
+                        <img src="<?= ASSETS; ?>/images/empty-letters.png" alt="No Letters" class="mx-auto h-40 animate-bounce">
                         <p class="mt-4 text-lg text-blue-900">Belum ada surat yang perlu diverifikasi</p>
                         <p class="text-sm text-gray-500">Surat yang membutuhkan verifikasi akan muncul di sini</p>
                     </div>
