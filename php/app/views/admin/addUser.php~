@@ -131,7 +131,7 @@
 <body class="bg-gray-50">
 <div class="flex">
     <!-- Sidebar -->
-    <?php include_once '../app/views/assets/components/AdminDashboard/sidebar.php'; ?>
+    <?php include './app/views/assets/components/AdminDashboard/sidebar.php'; ?>
 
     <!-- Main Content -->
     <div class="flex-1 min-h-screen ml-64">

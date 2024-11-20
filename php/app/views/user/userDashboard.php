@@ -6,7 +6,7 @@
     <title>Dashboard User - IsFor PRI</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="/IsFor-Website/App/public/assets/css/styles.css">
+    <link rel="stylesheet" href="<?php echo BASEURL; ?>/assets/css/styles.css">
 </head>
 <body class="bg-gray-50">
 <div class="flex">
