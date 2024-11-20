@@ -1,29 +1,29 @@
 <?php
 
-class Papers extends Controller{
+class Galleries extends Controller{
     public function index(){
         
     }
 
-    public function addPaperView(){
+    public function uploadImgView(){
         $this->checkLogin();
         $role = $this->checkRole();
         $this->checkSessionTimeOut();
         if($role == 2){
             $this->saveLastVisitedPage();
-            $this->view('user/submitLetter');
+            $this->view('user/uploadImage');
         }else{
             header('Location: ' . $this->getLastVisitedPage());
         }
     }
 
-    public function verifyPaperview(){
+    public function verifyImgview(){
         $this->checkLogin();
         $role = $this->checkRole();
         $this->checkSessionTimeOut();
         if($role == 1){
             $this->saveLastVisitedPage();
-            $this->view('admin/verifyLetters');
+            $this->view('admin/verifyImages');
         }else{
             header('Location: ' . $this->getLastVisitedPage());
         }

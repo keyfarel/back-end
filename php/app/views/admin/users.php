@@ -56,11 +56,10 @@
                     <h2 class="text-xl font-semibold text-blue-900">Daftar Pengguna</h2>
                 </div>
 
-                <?php if (empty($users)): ?>
+                <?php if (empty($data)): ?>
                     <!-- Empty State -->
                     <div class="text-center py-12">
-                        <img src="<?= ASSETS; ?>/images/empty-user.png" alt="No Users"
-                             class="mx-auto h-40 animate-bounce rounded-full">
+                        <img src="<?= ASSETS; ?>/images/empty-user.png" alt="No Users" class="mx-auto h-40 animate-bounce rounded-full">
                         <p class="mt-4 text-lg text-blue-900">Belum ada pengguna</p>
                         <p class="text-sm text-gray-500">Mulai dengan menambahkan pengguna baru</p>
                     </div>
@@ -86,7 +85,41 @@
                             </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-blue-100">
-                            <!-- User rows would be populated here -->
+                            <?php foreach ($data['allUser'] as $allUser) :?>                
+                                    <tr class="table-row">
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="flex items-center">
+                                                <div class="h-10 w-10 flex-shrink-0">
+                                                    <img class="h-10 w-10 rounded-full object-cover" src="<?= PHOTOPROFILE . $allUser['profile_picture']?>" alt="">
+                                                </div>
+                                                <div class="ml-4">
+                                                    <div class="text-sm font-medium text-gray-900"><?= $allUser['username'] ?></div>
+                                                    
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm font-medium text-gray-900"><?= $allUser['email'] ?></div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm text-gray-900">
+                                                <?php if ($allUser['role_id'] == 1) { ?>
+                                                    <p>Admin</p>
+                                                <?php } elseif ($allUser['role_id'] == 2) { ?>
+                                                    <p>Researcher</p>
+                                                <?php } else { ?>
+                                                    <p>Role tidak ada</p>
+                                                <?php } ?>
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                            <a href="<?= BASEURL; ?>/User/editView/<?= $allUser['user_id'] ?>" class="text-indigo-600 hover:text-indigo-900">Edit</a>
+                                            <?php if ($allUser['user_id'] != $_SESSION['user_id']) { ?>
+                                                | <a href="<?= BASEURL; ?>/User/Delete/<?= $allUser['user_id'] ?>" class="text-red-600 hover:text-red-900" onclick="return confirm('Apakah Anda yakin ingin menghapus user ini?')">Delete</a>
+                                            <?php }?>
+                                        </td>
+                                    </tr>
+                                    <?php endforeach; ?>
                             </tbody>
                         </table>
                     </div>
