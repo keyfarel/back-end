@@ -8,8 +8,11 @@ class User extends Controller
         $role = $this->checkRole();
         $this->checkSessionTimeOut();
         if ($role == 1) {
+            $data['allUser'] = $this->model('UsersModel')->getUser();
+            // var_dump($users);
+            // die;
             $this->saveLastVisitedPage();
-            $this->view('admin/users');
+            $this->view('admin/users', $data);
         } else {
             header('Location: ' . $this->getLastVisitedPage());
         }
