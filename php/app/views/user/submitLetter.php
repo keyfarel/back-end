@@ -27,7 +27,7 @@
 
                 <!-- Form Section -->
                 <div class="bg-white rounded-2xl border-2 border-blue-100 p-8">
-                    <form action="/IsFor-Website/App/controllers/lettercontroller.php" method="POST" id="letterForm">
+                    <form action="" method="POST" id="letterForm">
                         <input type="hidden" name="letterType" value="research_recommendation">
                         <div class="space-y-6">
                             <!-- Research Title -->
@@ -107,7 +107,7 @@
     function previewLetter() {
         const formData = new FormData(document.getElementById('letterForm'));
 
-        fetch('/IsFor-Website/App/controllers/lettercontroller.php?action=preview', {
+        fetch('<?= BASEURL ?>/papers/createPaper', {
             method: 'POST',
             body: formData
         })
