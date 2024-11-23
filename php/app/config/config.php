@@ -8,4 +8,4 @@ define('ASSETS', 'http://localhost/IsFor-website/php/app/views/assets');
 define('DB_HOST', 'localhost');
 define('DB_USER', 'root');
 define('DB_PASS', '');
-define('DB_NAME', 'isfor'); 
+define('DB_NAME', 'isfor_database'); 
