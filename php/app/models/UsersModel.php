@@ -21,15 +21,19 @@ class UsersModel{
     // Fungsi untuk menambahkan user default
     public function addDefaultUser() {
         // Data user default
+        $name = 'admin';
         $username = 'admin';
         $email = 'admin@example.com';
+        $profile_picture = NULL;
         $password = password_hash('123', PASSWORD_BCRYPT); // Hash password default
         $role_id = 1; // Misalkan role 1 adalah admin
 
         // Query untuk memasukkan user default
-        $this->db->query("INSERT INTO users (username, email, password, role_id) VALUES (:username, :email, :password, :role_id)");
+        $this->db->query("INSERT INTO users (name, username, email, profile_picture, password, role_id) VALUES (:name, :username, :email, :profile_picture, :password, :role_id)");
+        $this->db->bind(':name', $name);
         $this->db->bind(':username', $username);
         $this->db->bind(':email', $email);
+        $this->db->bind(':profile_picture', $profile_picture);
         $this->db->bind(':password', $password);
         $this->db->bind(':role_id', $role_id);
         $this->db->execute();
@@ -45,11 +49,12 @@ class UsersModel{
 
     // fungsi menambah user
     public function addUser($data, $photo){
-        $query = "INSERT INTO users (username, password, email, profile_picture, role_id)
+        $query = "INSERT INTO users (name, username, password, email, profile_picture, role_id)
                     VALUES
-                    (:username, :password, :email, :profile_picture, :role)";
+                    (:name, :username, :password, :email, :profile_picture, :role)";
 
         $this->db->query($query);
+        $this->db->bind('name', $data['name']);
         $this->db->bind('username', $data['username']);
         $this->db->bind('password', password_hash($data['password'], PASSWORD_BCRYPT));
         $this->db->bind('email', $data['email']);
@@ -93,6 +98,7 @@ class UsersModel{
     //fungsi mengedit user
     public function editUser($id, $data, $photo, $password){
         $query = "UPDATE users SET
+                    name = :name,
                     username = :username,
                     password = :password,
                     email = :email,
@@ -101,6 +107,7 @@ class UsersModel{
                     WHERE user_id = :user_id";
 
         $this->db->query($query);
+        $this->db->bind('name', $data['name']);
         $this->db->bind('username', $data['username']);
         $this->db->bind('password', $password);
         $this->db->bind('email', $data['email']);

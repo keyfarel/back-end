@@ -17,14 +17,18 @@
             <div class="max-w-7xl mx-auto mb-12 flex justify-between items-center">
                 <div>
                     <h1 class="text-4xl font-bold text-blue-900">Dashboard</h1>
-                    <p class="text-gray-600 mt-2">Selamat datang kembali, <?= $data['user']['username'] ?></p>
+                    <p class="text-gray-600 mt-2">Selamat datang kembali, <?= $data['user']['name'] ?></p>
                 </div>
                 <div class="flex items-center space-x-4">
                     <div class="text-right">
-                        <p class="font-semibold text-blue-900"><?= $data['user']['username'] ?></p>
+                        <p class="font-semibold text-blue-900"><?= $data['user']['name'] ?></p>
                         <p class="text-sm text-gray-600">Peneliti</p>
                     </div>
-                    <img src="../app/img/profile/<?= $data['user']['profile_picture'] ?>" alt="User Profile" class="w-12 h-12 rounded-full object-cover">
+                    <?php if($data['user']['profile_picture'] == NULL) :?>
+                        <img class="h-10 w-10 rounded-full object-cover" src="<?= ASSETS ?>/images/empty-user.png" alt="">
+                    <?php else :?>
+                        <img class="h-10 w-10 rounded-full object-cover" src="<?= PHOTOPROFILE . $data['user']['profile_picture']?>" alt="">
+                    <?php endif; ?>
                 </div>
             </div>
 

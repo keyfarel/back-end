@@ -80,4 +80,8 @@ class Papers extends Controller{
 
         return $pecahkan[2] . ' ' . $bulan[ (int)$pecahkan[1] ] . ' ' . $pecahkan[0];
     }
+
+    public function sendPaper(){
+        $paper = $this->createPaper();
+    }
 }

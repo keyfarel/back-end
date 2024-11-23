@@ -238,10 +238,14 @@
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <div class="flex items-center">
                                                 <div class="h-10 w-10 flex-shrink-0">
-                                                    <img class="h-10 w-10 rounded-full object-cover" src="<?= PHOTOPROFILE . $allUser['profile_picture']?>" alt="">
+                                                    <?php if($allUser['profile_picture'] == NULL) :?>
+                                                        <img class="h-10 w-10 rounded-full object-cover" src="<?= ASSETS ?>/images/empty-user.png" alt="">
+                                                    <?php else :?>
+                                                        <img class="h-10 w-10 rounded-full object-cover" src="<?= PHOTOPROFILE . $allUser['profile_picture']?>" alt="">
+                                                    <?php endif; ?>
                                                 </div>
                                                 <div class="ml-4">
-                                                    <div class="text-sm font-medium text-gray-900"><?= $allUser['username'] ?></div>
+                                                    <div class="text-sm font-medium text-gray-900"><?= $allUser['name'] ?></div>
                                                     <div class="text-sm text-gray-500"><?= $allUser['email'] ?></div>
                                                 </div>
                                             </div>
