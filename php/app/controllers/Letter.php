@@ -27,9 +27,26 @@ class Letter extends Controller{
         $this->checkSessionTimeOut();
         if($role == 1){
             $this->saveLastVisitedPage();
-            $this->view('admin/verifyLetters');
+            $data['allLetters'] = $this->model('LettersModel')->getAllLetter();
+            // var_dump($letter);
+            // exit;
+            $this->view('admin/verifyLetters', $data);
         }else{
             header('Location: ' . $this->getLastVisitedPage());
+        }
+    }
+
+    public function getLetterById() {
+        $id = $_GET['id']; // Ambil ID dari request
+        $letter = $this->model('LettersModel')->getLetterById($id);
+        var_dump($letter);
+        exit;
+    
+        if ($letter) {
+            echo json_encode(['filePath' => $letter['file_path']]);
+        } else {
+            http_response_code(404);
+            echo json_encode(['message' => 'Surat tidak ditemukan']);
         }
     }
 
@@ -55,7 +72,7 @@ class Letter extends Controller{
         $html = str_replace("{{ researchTopic }}", $researchTopic, $html);
         $html = str_replace("{{ tanggal }}", $date, $html);
 
-        $title = "surat_pengajuan_" . $researchTitle . ".pdf";
+        $title = "pengajuan_surat_" . $researchTitle . ".pdf";
 
         $dompdf->loadHtml($html);
         $dompdf->set_paper('A4', 'portrait');

@@ -8,6 +8,11 @@ class LettersModel{
         $this->db = new Database;
     }
 
+    public function getAllLetter(){
+        $this->db->query('SELECT * FROM ' . $this->table);
+        return $this->db->resultSet();
+    }
+
     public function addLetter($data, $fileName){
         $query = "INSERT INTO letters(title, file_url, status, user_id)
                     VALUES 
@@ -23,4 +28,12 @@ class LettersModel{
 
         return $this->db->rowCount();
     }
+
+    public function getLetterById($id) {
+        $this->db->query('SELECT file_url FROM ' . $this->table . ' WHERE letter_id = :id');
+        $this->db->bind(':id', $id);
+        return $this->db->single();
+    }
+    
+
 }

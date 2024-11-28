@@ -1,3 +1,6 @@
+<?php 
+var_dump($data);
+?>
 <!DOCTYPE html>
 <html lang="id" class="scroll-smooth">
 <head>
@@ -40,7 +43,7 @@
 
                 <!-- Letters Grid -->
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <?php if (empty($letters)): ?>
+                    <?php if (empty($data)): ?>
                     <!-- Empty State -->
                     <div class="col-span-full text-center py-16 bg-white rounded-2xl border-2 border-blue-100">
                         <img src="<?= ASSETS; ?>/images/empty-letters.png" alt="No Letters" class="mx-auto h-40 animate-bounce">
@@ -49,28 +52,28 @@
                     </div>
                     <?php else: ?>
                     <!-- Letter Cards -->
-                    <?php foreach ($letters as $index => $letter): ?>
+                    <?php foreach ($data['allLetters'] as $letter): ?>
                     <div class="letter-card bg-white rounded-2xl border-2 border-blue-100 overflow-hidden" style="animation-delay: <?php echo $index * 0.1; ?>s">
                         <div class="p-6">
                             <div class="flex items-center justify-between mb-4">
                                 <span class="px-3 py-1 bg-yellow-50 text-yellow-700 rounded-full text-sm font-medium">
                                     Menunggu Verifikasi
                                 </span>
-                                <span class="text-sm text-gray-500"><?php echo $letter['date']; ?></span>
+                                <!-- <span class="text-sm text-gray-500"><?php echo $letter['date']; ?></span> -->
                             </div>
-                            <h3 class="text-lg font-semibold text-blue-900 mb-2"><?php echo $letter['title']; ?></h3>
-                            <p class="text-gray-600 text-sm mb-4"><?php echo $letter['description']; ?></p>
+                            <h3 class="text-lg font-semibold text-blue-900 mb-2"><?= $letter['title']; ?></h3>
+                            <!-- <p class="text-gray-600 text-sm mb-4"><?php echo $letter['description']; ?></p> -->
                             <!-- Action Buttons -->
                             <div class="flex space-x-3">
-                                <button onclick="viewLetter(<?php echo $letter['id']; ?>)" 
+                                <button onclick="viewLetter(<?= $letter['letter_id']; ?>)" 
                                         class="flex-1 px-4 py-2 bg-blue-50 text-blue-700 rounded-xl hover:bg-blue-100 transition-colors">
                                     Lihat Detail
                                 </button>
-                                <button onclick="verifyLetter(<?php echo $letter['id']; ?>)" 
+                                <button onclick="verifyLetter(<?= $letter['letter_id']; ?>)" 
                                         class="flex-1 px-4 py-2 bg-green-50 text-green-700 rounded-xl hover:bg-green-100 transition-colors">
                                     Verifikasi
                                 </button>
-                                <button onclick="rejectLetter(<?php echo $letter['id']; ?>)" 
+                                <button onclick="rejectLetter(<?= $letter['letter_id']; ?>)" 
                                         class="flex-1 px-4 py-2 bg-red-50 text-red-700 rounded-xl hover:bg-red-100 transition-colors">
                                     Tolak
                                 </button>
@@ -103,9 +106,22 @@
 
     <script>
         function viewLetter(id) {
-            // Implementation for viewing letter
-            document.getElementById('letterModal').classList.remove('hidden');
-            document.getElementById('letterModal').classList.add('flex');
+            // console.log(id);
+
+            fetch(`<?= BASEURL ?>/letter/getLetterById/${id}`)
+            .then(respone => respone.json())
+            .then(data => {
+                // Implementation for viewing letter
+                const modal = document.getElementById('letterModal');
+                const letterContent = document.getElementById('letterModal');
+                modal.classList.remove('hidden');
+                letterContent.classList.remove('flex');
+
+                letterContent.innerHTML = `
+                    <iframe src="${data.filePath}" width="100%" height="500px"></iframe>
+                `;
+            })
+            .catch(error => console.error('Error fetching letter:', error));
         }
 
         function closeLetterModal() {
