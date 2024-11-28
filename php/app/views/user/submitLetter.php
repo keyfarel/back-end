@@ -27,7 +27,8 @@
 
                 <!-- Form Section -->
                 <div class="bg-white rounded-2xl border-2 border-blue-100 p-8">
-                    <form action="" method="POST" id="letterForm">
+                    <form action="<?= BASEURL ?>/letter/sendletter" method="POST" id="letterForm">
+                        <input type="hidden" name="user_id" value="<?= $_SESSION["user_id"] ?>">
                         <input type="hidden" name="letterType" value="research_recommendation">
                         <div class="space-y-6">
                             <!-- Research Title -->
@@ -107,7 +108,7 @@
     function previewLetter() {
         const formData = new FormData(document.getElementById('letterForm'));
 
-        fetch('<?= BASEURL ?>/papers/createPaper', {
+        fetch('<?= BASEURL ?>/letter/previewletter', {
             method: 'POST',
             body: formData
         })

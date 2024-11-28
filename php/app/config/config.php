@@ -4,6 +4,8 @@
 define('BASEURL', 'http://localhost/IsFor-website/php/public');
 define('PHOTOPROFILE', 'http://localhost/IsFor-website/php/app/img/profile/');
 define('ASSETS', 'http://localhost/IsFor-website/php/app/views/assets');
+// define('LETTER', 'http://localhost/IsFor-website/php/public/letters');
+define('LETTER', 'http://localhost/IsFor-website/php/app/letters');
 
 //define('DB_HOST', 'localhost');
 //define('DB_USER', 'root');
