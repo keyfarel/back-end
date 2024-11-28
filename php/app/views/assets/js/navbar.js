@@ -1,4 +1,5 @@
-// Navigation items data
+import { BASEURL } from "./config.js";
+
 const navItems = [
   {name: 'Beranda', href: '/isfor-web/App/views/main/home.php'},
   {
@@ -20,7 +21,7 @@ const navItems = [
   },
   {name: 'Agenda', href: '#agenda'},
   {name: 'Arsip', dropdownItems: [{name: 'Dokumen', href: '#'}]},
-  {name: 'Galeri', href: '/galeri'},
+  {name: 'Galeri', href: `${BASEURL}/galeri`},
 ];
 
 // Render navigation items
@@ -132,12 +133,22 @@ document.addEventListener ('DOMContentLoaded', () => {
   });
 });
 // Add after existing code
+// const handleNavigation = e => {
+//   const link = e.currentTarget;
+//   if (!link.href.startsWith ('#')) {
+//     e.preventDefault ();
+//     document.body.classList.add ('opacity-0');
+//     setTimeout (() => {
+//       window.location.href = link.href;
+//     }, 300);
+//   }
+// };
 const handleNavigation = e => {
   const link = e.currentTarget;
-  if (!link.href.startsWith ('#')) {
-    e.preventDefault ();
-    document.body.classList.add ('opacity-0');
-    setTimeout (() => {
+  if (!link.href.startsWith('#') && !link.href.includes('/galeri')) {
+    e.preventDefault();
+    document.body.classList.add('opacity-0');
+    setTimeout(() => {
       window.location.href = link.href;
     }, 300);
   }

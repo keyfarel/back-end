@@ -2,7 +2,7 @@
 
 class Galleries extends Controller{
     public function index(){
-        
+        $this->view("main/galeri");
     }
 
     public function uploadImgView(){
