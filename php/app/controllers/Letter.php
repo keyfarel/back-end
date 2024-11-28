@@ -36,18 +36,13 @@ class Letter extends Controller{
         }
     }
 
-    public function getLetterById() {
-        $id = $_GET['id']; // Ambil ID dari request
+    public function getLetter() {
+        $id = $_POST['id'];
         $letter = $this->model('LettersModel')->getLetterById($id);
-        var_dump($letter);
-        exit;
-    
-        if ($letter) {
-            echo json_encode(['filePath' => $letter['file_path']]);
-        } else {
-            http_response_code(404);
-            echo json_encode(['message' => 'Surat tidak ditemukan']);
-        }
+
+        $filePath = LETTER . '/pending/' . $letter['file_url'];
+
+        echo json_encode($filePath);
     }
 
     public function createLetter($preview = false){
@@ -137,4 +132,58 @@ class Letter extends Controller{
             echo "tambah data gagal";
         }
     }
+
+    public function updateStatusLetter(){
+        $id = $_POST['id'];
+        $status = $_POST['status'];
+    
+        $affectedRows = $this->model('LettersModel')->updateStatusLetter($id, $status);
+        if ($affectedRows > 0) {
+            // Ambil nama file berdasarkan ID
+            $fileName = $this->model('LettersModel')->getLetterById($id);
+            
+            // Validasi fileName
+            if (!$fileName) {
+                echo json_encode(['success' => false, 'message' => 'File tidak ditemukan']);
+                return;
+            }
+            
+            // $pathUpdate = $this->changePathFile($status, $fileName);
+            // if ($pathUpdate) {
+            //     echo json_encode(['success' => true, 'message' => 'Status diperbarui dan file berhasil dipindahkan']);
+            // } else {
+            //     echo json_encode(['success' => false, 'message' => 'Gagal memindahkan file']);
+            // }
+
+            echo json_encode(['success' => true, 'message' => 'Status berhasil diperbarui']);
+
+        } else {
+            echo json_encode(['success' => false, 'message' => 'Tidak ada perubahan status']);
+        }
+    }
+
+    // // function untuk merubah path file
+    // public function changePathFile($status, $fileName){
+    //     // Tentukan path sumber dan tujuan
+    //     if ($status == 2) {  // Status Verified
+    //         $sourcePath = realpath(__DIR__ . '/../letters/pending/' . $fileName);
+    //         $destPath = realpath(__DIR__ . '/../letters/verified/' . $fileName);
+    //     } else if ($status == 3) {  // Status Rejected
+    //         $sourcePath = realpath(__DIR__ . '/../letters/pending/' . $fileName);
+    //         $destPath = realpath(__DIR__ . '/../letters/reject/' . $fileName);
+    //     }
+
+    //     // Pastikan file ada sebelum mencoba untuk memindahkannya
+    //     if (file_exists($sourcePath)) {
+    //         if (copy($sourcePath, $destPath)) {
+    //             return true;  // Cukup mengembalikan true atau false
+    //         } else {
+    //             // Jika gagal memindahkan file
+    //             return false;
+    //         }
+    //     } else {
+    //         // Jika file sumber tidak ditemukan
+    //         return false;
+    //     }
+    // }
 }

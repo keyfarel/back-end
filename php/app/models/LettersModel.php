@@ -35,5 +35,17 @@ class LettersModel{
         return $this->db->single();
     }
     
+    public function updateStatusLetter($id, $status){
+        $this->db->query('UPDATE ' . $this->table . ' SET status = :status WHERE letter_id = :id ');
+        $this->db->bind(':status', $status) ;
+        $this->db->bind(':id', $id);
+        $this->db->execute();
+        $rowcount = $this->db->rowCount();
+        if ($rowcount > 0) {
+            return $rowcount;  // Jika ada baris yang terpengaruh, kembalikan jumlahnya
+        } else {
+            return 0;  // Jika tidak ada baris yang terpengaruh
+        }
+    }
 
 }

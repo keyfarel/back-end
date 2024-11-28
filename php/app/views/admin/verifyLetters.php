@@ -1,5 +1,9 @@
 <?php 
-var_dump($data);
+// var_dump($data);
+
+$filteredLetters = array_filter($data['allLetters'], function($letter) {
+    return $letter['status'] == 1;
+});
 ?>
 <!DOCTYPE html>
 <html lang="id" class="scroll-smooth">
@@ -52,7 +56,7 @@ var_dump($data);
                     </div>
                     <?php else: ?>
                     <!-- Letter Cards -->
-                    <?php foreach ($data['allLetters'] as $letter): ?>
+                    <?php foreach ($filteredLetters as $letter): ?>
                     <div class="letter-card bg-white rounded-2xl border-2 border-blue-100 overflow-hidden" style="animation-delay: <?php echo $index * 0.1; ?>s">
                         <div class="p-6">
                             <div class="flex items-center justify-between mb-4">
@@ -106,22 +110,27 @@ var_dump($data);
 
     <script>
         function viewLetter(id) {
-            // console.log(id);
+            // Implementation for viewing letter
+            document.getElementById('letterModal').classList.remove('hidden');
+            document.getElementById('letterModal').classList.add('flex');
 
-            fetch(`<?= BASEURL ?>/letter/getLetterById/${id}`)
-            .then(respone => respone.json())
-            .then(data => {
-                // Implementation for viewing letter
-                const modal = document.getElementById('letterModal');
-                const letterContent = document.getElementById('letterModal');
-                modal.classList.remove('hidden');
-                letterContent.classList.remove('flex');
-
-                letterContent.innerHTML = `
-                    <iframe src="${data.filePath}" width="100%" height="500px"></iframe>
-                `;
-            })
-            .catch(error => console.error('Error fetching letter:', error));
+            $.ajax({
+                url: '<?= BASEURL ?>/letter/getLetter',
+                method: 'POST',
+                dataType: 'json',
+                data: { id : id},
+                success: function(data){
+                    console.log(data);
+                    // Implementation for viewing letter
+                    const letterContent = document.getElementById('letterContent');
+                    letterContent.innerHTML = `
+                        <iframe src="${data}" width="100%" height="500px"></iframe>
+                    `;
+                },
+                error: function(data){
+                    alert('Gagal');
+                }
+            });
         }
 
         function closeLetterModal() {
@@ -131,11 +140,30 @@ var_dump($data);
 
         function verifyLetter(id) {
             // Implementation for verifying letter
+            updateLetterStatus(id, 2);
         }
 
         function rejectLetter(id) {
             // Implementation for rejecting letter
+            updateLetterStatus(id, 3);
+        }
+
+        function updateLetterStatus(id, status){
+            $.ajax({
+                url: '<?= BASEURL ?>/letter/updateStatusLetter',
+                method: 'POST',
+                dataType: 'json',
+                data: { id : id, status : status },
+                success: function(msg){
+                    console.log(msg);
+                },
+                error: function(msg){
+                    alert('Gagal memperbarui status');
+                }
+            });
         }
     </script>
+    <!-- Pastikan jQuery dimuat -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </body>
 </html> 
