@@ -2,12 +2,14 @@
 
 use Dompdf\Dompdf;
 use Dompdf\Options;
-class Papers extends Controller{
+use Symfony\Component\VarDumper\VarDumper;
+
+class Letter extends Controller{
     public function index(){
         
     }
 
-    public function addPaperView(){
+    public function addLetterView(){
         $this->checkLogin();
         $role = $this->checkRole();
         $this->checkSessionTimeOut();
@@ -19,19 +21,36 @@ class Papers extends Controller{
         }
     }
 
-    public function verifyPaperview(){
+    public function verifyLetterview(){
         $this->checkLogin();
         $role = $this->checkRole();
         $this->checkSessionTimeOut();
         if($role == 1){
             $this->saveLastVisitedPage();
-            $this->view('admin/verifyLetters');
+            $data['allLetters'] = $this->model('LettersModel')->getAllLetter();
+            // var_dump($letter);
+            // exit;
+            $this->view('admin/verifyLetters', $data);
         }else{
             header('Location: ' . $this->getLastVisitedPage());
         }
     }
 
-    public function createPaper(){
+    public function getLetterById() {
+        $id = $_GET['id']; // Ambil ID dari request
+        $letter = $this->model('LettersModel')->getLetterById($id);
+        var_dump($letter);
+        exit;
+    
+        if ($letter) {
+            echo json_encode(['filePath' => $letter['file_path']]);
+        } else {
+            http_response_code(404);
+            echo json_encode(['message' => 'Surat tidak ditemukan']);
+        }
+    }
+
+    public function createLetter($preview = false){
         
         $researchTitle = $_POST["researchTitle"];
         $leadResearcher = $_POST["leadResearcher"];
@@ -53,12 +72,22 @@ class Papers extends Controller{
         $html = str_replace("{{ researchTopic }}", $researchTopic, $html);
         $html = str_replace("{{ tanggal }}", $date, $html);
 
+        $title = "pengajuan_surat_" . $researchTitle . ".pdf";
 
         $dompdf->loadHtml($html);
-        $dompdf->setPaper('A4', 'portrait');
+        $dompdf->set_paper('A4', 'portrait');
         $dompdf->render();
-        $dompdf->add_info("Title", "An Example PDF");
-        $dompdf->stream('surat_pengajuan.pdf');
+        $dompdf->add_info("Title", $title);
+
+        if ($preview) {
+            // Stream untuk preview di browser
+            $dompdf->stream($title);
+            exit; // Stop eksekusi setelah stream
+        } else {
+            // Kembalikan konten PDF untuk keperluan lain
+            return $dompdf->output();
+        }
+        $dompdf->stream($title);
     }
 
     public function tgl_indo($tanggal){
@@ -81,7 +110,31 @@ class Papers extends Controller{
         return $pecahkan[2] . ' ' . $bulan[ (int)$pecahkan[1] ] . ' ' . $pecahkan[0];
     }
 
-    public function sendPaper(){
-        $paper = $this->createPaper();
+    public function previewLetter(){
+        $this->createLetter(true);
+    }
+
+    public function sendLetter(){
+        $researchTitle = $_POST["researchTitle"];
+        $pdf = $this->createLetter(false);
+
+        // target direktori penyimpanan
+        $targetDirectory = __DIR__ . '/../letters/pending/';
+
+        if (!is_dir($targetDirectory)) {
+            mkdir($targetDirectory, 0777, true); // Buat folder jika belum ada
+        }
+
+        $fileName = 'surat_pengajuan_' . $researchTitle . '.pdf';
+        $filePath = $targetDirectory . $fileName;
+
+        file_put_contents($filePath, $pdf);
+
+        if ($this->model('LettersModel')->addLetter($_POST, $fileName) > 0) {
+            header('Location: ' . BASEURL . '/dashboardUser');
+            echo "tambah data berhasil";
+        } else {
+            echo "tambah data gagal";
+        }
     }
 }
