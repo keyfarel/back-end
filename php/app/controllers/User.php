@@ -101,11 +101,10 @@ class User extends Controller
 
     public function edit()
     {
-
+        $id = $_POST['user_id'];
         $oldPhoto = $_POST["oldImage"];
         $oldPass = $_POST["oldPass"];
         $newPass = $_POST["password"];
-        $id = $_POST['user_id'];
 
         if (!empty($newPass)) {
             // Jika password baru diinputkan, hash password baru dan simpan
