@@ -76,4 +76,16 @@ class LettersModel{
         return $this->db->single();
     }
 
+    public function countPending(){
+        $this->db->query('SELECT COUNT(status) AS total FROM letters WHERE status = 1');
+        $this->db->execute();
+        return $this->db->single();
+    }
+
+    public function countVerify(){
+        $this->db->query('SELECT COUNT(status) AS total FROM letters WHERE status = 2');
+        $this->db->execute();
+        return $this->db->single();
+    }
+
 }
