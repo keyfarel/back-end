@@ -36,6 +36,7 @@ class Letter extends Controller{
         }
     }
 
+    //untuk admin
     public function getLetter() {
         $id = $_POST['id'];
         $letter = $this->model('LettersModel')->getLetterById($id);

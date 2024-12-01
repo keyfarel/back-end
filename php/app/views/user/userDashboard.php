@@ -43,7 +43,7 @@
                         </div>
                         <div class="ml-4">
                             <p class="text-sm font-medium text-gray-500">Surat Disetujui</p>
-                            <p class="text-2xl font-bold text-blue-900">0</p>
+                            <p class="text-2xl font-bold text-blue-900"><?= $data['verify']['total'] ?></p>
                         </div>
                     </div>
                 </div>
@@ -56,7 +56,7 @@
                         </div>
                         <div class="ml-4">
                             <p class="text-sm font-medium text-gray-500">Surat Ditolak</p>
-                            <p class="text-2xl font-bold text-blue-900">0</p>
+                            <p class="text-2xl font-bold text-blue-900"><?= $data['reject']['total'] ?></p>
                         </div>
                     </div>
                 </div>
@@ -69,7 +69,7 @@
                         </div>
                         <div class="ml-4">
                             <p class="text-sm font-medium text-gray-500">Surat Tertunda</p>
-                            <p class="text-2xl font-bold text-blue-900">0</p>
+                            <p class="text-2xl font-bold text-blue-900"><?= $data['pending']['total'] ?></p>
                         </div>
                     </div>
                 </div>
@@ -92,24 +92,85 @@
                         </thead>
                         <tbody>
                         <!-- Sample submission row -->
+                        <?php foreach($data['letter'] AS $letter) :?>
                         <tr class="border-t border-gray-100">
-                            <td class="py-4">Surat Penelitian</td>
-                            <td class="py-4">2024-03-20</td>
+                            <td class="py-4"><?= $letter['title'] ?></td>
+                            <td class="py-4"><?= $letter['date'] ?></td>
                             <td class="py-4">
-                                        <span class="px-3 py-1 text-xs font-medium text-yellow-700 bg-yellow-100 rounded-full">
-                                            Tertunda
-                                        </span>
+                                <?php if($letter['status'] == 1) :?>
+                                    <span class="px-3 py-1 text-xs font-medium text-yellow-700 bg-yellow-100 rounded-full">
+                                        Tertunda
+                                    </span>
+                                <?php elseif($letter['status'] == 2) :?>
+                                    <span class="px-3 py-1 text-xs font-medium text-green-700 bg-green-100 rounded-full">
+                                        disetujui
+                                    </span>
+                                <?php else :?>
+                                    <span class="px-3 py-1 text-xs font-medium text-red-700 bg-red-100 rounded-full">
+                                        ditolak
+                                    </span>
+                                <?php endif ?>
                             </td>
                             <td class="py-4">
-                                <button class="text-blue-600 hover:text-blue-800">Lihat Detail</button>
+                                <button onclick="viewLetter(<?= $letter['letter_id']; ?>)" class="text-blue-600 hover:text-blue-800">Lihat Detail</button>
                             </td>
                         </tr>
+                        <?php endforeach; ?>
                         </tbody>
                     </table>
                 </div>
             </div>
         </main>
     </div>
+
+    <!-- View Letter Modal -->
+    <div id="letterModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center">
+        <div class="bg-white rounded-2xl p-8 max-w-2xl w-full mx-4">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold text-blue-900">Detail Surat</h3>
+                <button onclick="closeLetterModal()" class="text-gray-500 hover:text-gray-700">
+                    <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            <div id="letterContent">
+                <!-- Letter content will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function viewLetter(id) {
+            // Implementation for viewing letter
+            document.getElementById('letterModal').classList.remove('hidden');
+            document.getElementById('letterModal').classList.add('flex');
+
+            $.ajax({
+                url: '<?= BASEURL ?>/letter/getLetter',
+                method: 'POST',
+                dataType: 'json',
+                data: { id : id},
+                success: function(data){
+                    console.log(data);
+                    // Implementation for viewing letter
+                    const letterContent = document.getElementById('letterContent');
+                    letterContent.innerHTML = `
+                        <iframe src="${data}" width="100%" height="500px"></iframe>
+                    `;
+                },
+                error: function(data){
+                    alert('Gagal');
+                }
+            });
+        }
+
+        function closeLetterModal() {
+            document.getElementById('letterModal').classList.add('hidden');
+            document.getElementById('letterModal').classList.remove('flex');
+        }
+    </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </div>
 </body>
 </html>

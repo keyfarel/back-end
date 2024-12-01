@@ -1,5 +1,5 @@
 <?php 
-// var_dump($data);
+var_dump($data);
 
 $filteredLetters = array_filter($data['allLetters'], function($letter) {
     return $letter['status'] == 1;
@@ -47,7 +47,7 @@ $filteredLetters = array_filter($data['allLetters'], function($letter) {
 
                 <!-- Letters Grid -->
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <?php if (empty($data)): ?>
+                    <?php if (empty($filteredLetters)): ?>
                     <!-- Empty State -->
                     <div class="col-span-full text-center py-16 bg-white rounded-2xl border-2 border-blue-100">
                         <img src="<?= ASSETS; ?>/images/empty-letters.png" alt="No Letters" class="mx-auto h-40 animate-bounce">
@@ -156,6 +156,7 @@ $filteredLetters = array_filter($data['allLetters'], function($letter) {
                 data: { id : id, status : status },
                 success: function(msg){
                     console.log(msg);
+                    location.reload();
                 },
                 error: function(msg){
                     alert('Gagal memperbarui status');
