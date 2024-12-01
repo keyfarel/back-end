@@ -69,7 +69,7 @@ class User extends Controller
         }
 
         //cek jika ukurannya terlalu besar
-        if ($sizeFile > 2000000) {
+        if ($sizeFile > 5000000) {
             echo "ukuran gambar terlalu besar";
             return false;
         }
