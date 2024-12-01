@@ -127,7 +127,12 @@ class User extends Controller
             }
         }
 
-        $this->model('UsersModel')->editUser($id, $_POST, $photo, $password);
+        if ($this->model('UsersModel')->editUser($id, $_POST, $photo, $password) > 0) {
+            header('Location: ' . BASEURL . '/User');
+            echo "data berhasil diupdate";
+        }else{
+            echo "data tidak berhasil diupdate";
+        }
     }
 
     public function delete($id)

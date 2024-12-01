@@ -165,7 +165,7 @@
                             </div>
                             <div class="ml-4">
                                 <p class="text-sm font-medium text-gray-500">Pending Letters</p>
-                                <p class="text-xl font-semibold text-blue-700">12</p>
+                                <p class="text-xl font-semibold text-blue-700"><?= $data['pending']['total'] ?></p>
                             </div>
                         </div>
                     </div>
@@ -179,7 +179,7 @@
                             </div>
                             <div class="ml-4">
                                 <p class="text-sm font-medium text-gray-600">Verified Letters</p>
-                                <p class="text-lg font-semibold text-gray-900">45</p>
+                                <p class="text-lg font-semibold text-gray-900"><?= $data['verify']['total'] ?></p>
                             </div>
                         </div>
                     </div>

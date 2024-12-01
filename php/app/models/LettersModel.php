@@ -14,12 +14,13 @@ class LettersModel{
     }
 
     public function addLetter($data, $fileName){
-        $query = "INSERT INTO letters(title, file_url, status, user_id)
+        $query = "INSERT INTO letters(title, date, file_url, status, user_id)
                     VALUES 
-                    (:title, :file_url, :status, :user_id)";
+                    (:title, :date, :file_url, :status, :user_id)";
 
         $this->db->query($query);
         $this->db->bind(":title", $data["researchTitle"]);
+        $this->db->bind(":date", date("Y-m-d"));
         $this->db->bind(":file_url", $fileName);
         $this->db->bind(":status", 1);
         $this->db->bind(":user_id", (int) $data["user_id"]);
@@ -34,6 +35,12 @@ class LettersModel{
         $this->db->bind(':id', $id);
         return $this->db->single();
     }
+
+    public function getLetterByUserIdLimit($id) {
+        $this->db->query('SELECT * FROM letters WHERE user_id = :id ORDER BY date DESC LIMIT 5');
+        $this->db->bind(':id', $id);
+        return $this->db->resultSet();
+    }
     
     public function updateStatusLetter($id, $status){
         $this->db->query('UPDATE ' . $this->table . ' SET status = :status WHERE letter_id = :id ');
@@ -46,6 +53,39 @@ class LettersModel{
         } else {
             return 0;  // Jika tidak ada baris yang terpengaruh
         }
+    }
+
+    public function countPendingStat($user_id){
+        $this->db->query('SELECT COUNT(status) AS total FROM letters WHERE status = 1 AND user_id = :user_id');
+        $this->db->bind(':user_id', $user_id);
+        $this->db->execute();
+        return $this->db->single();
+    }
+
+    public function countVerifyStat($user_id){
+        $this->db->query('SELECT COUNT(status) AS total FROM letters WHERE status = 2 AND user_id = :user_id');
+        $this->db->bind(':user_id', $user_id);
+        $this->db->execute();
+        return $this->db->single();
+    }
+    
+    public function countRejectStat($user_id){
+        $this->db->query('SELECT COUNT(status) AS total FROM letters WHERE status = 3 AND user_id = :user_id');
+        $this->db->bind(':user_id', $user_id);
+        $this->db->execute();
+        return $this->db->single();
+    }
+
+    public function countPending(){
+        $this->db->query('SELECT COUNT(status) AS total FROM letters WHERE status = 1');
+        $this->db->execute();
+        return $this->db->single();
+    }
+
+    public function countVerify(){
+        $this->db->query('SELECT COUNT(status) AS total FROM letters WHERE status = 2');
+        $this->db->execute();
+        return $this->db->single();
     }
 
 }
