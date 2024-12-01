@@ -22,7 +22,7 @@ class Home extends Controller{
         $this->view('main/agenda');
     }
 
-    public function galeriWeb(){
+    public function galeri(){
         $this->view('main/galeriweb');
     }
 
