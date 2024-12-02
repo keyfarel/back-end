@@ -106,7 +106,7 @@
                                     </button>
                                 </div>
                                 <div class="relative">
-                                    <input type="text" placeholder="Cari surat..." 
+                                    <input type="text" placeholder="Cari surat..." id="keyword"
                                            class="pl-10 pr-4 py-2 bg-blue-50 border-0 rounded-lg text-blue-900 placeholder-blue-400
                                                   focus:ring-2 focus:ring-blue-500">
                                     <svg class="w-5 h-5 text-blue-400 absolute left-3 top-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -178,6 +178,41 @@
                                     </table>
                                 </div>
                             <?php endif; ?>
+                            <nav aria-label="Page navigation example">
+                            <ul class="flex items-center -space-x-px h-8 text-sm">
+                                <li>
+                                <?php if($data['halamanAktif'] > 1) :?>
+                                    <a href="?halaman=<?= $data['halamanAktif'] - 1 ?>" class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                                        <span class="sr-only">Previous</span>
+                                        <svg class="w-2.5 h-2.5 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4"/>
+                                        </svg>
+                                    </a>
+                                <?php endif; ?>
+                                </li>
+                                    <?php for($i = 1; $i <= $data['jumlahHalaman']; $i++) :?>
+                                        <?php if($i == $data['halamanAktif']) :?>
+                                            <li>
+                                                <a href="?halaman=<?= $i; ?>" aria-current="page" class="z-10 flex items-center justify-center px-3 h-8 leading-tight text-blue-600 border border-blue-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white"><?= $i; ?></a>
+                                            </li>
+                                        <?php else :?>
+                                            <li>
+                                                <a href="?halaman=<?= $i; ?>" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"><?= $i; ?></a>
+                                            </li>
+                                        <?php endif; ?>
+                                    <?php endfor; ?>
+                                <li>
+                                <?php if($data['halamanAktif'] < $data['jumlahHalaman']) : ?>
+                                    <a href="?halaman=<?= $data['halamanAktif'] + 1 ?>" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                                        <span class="sr-only">Next</span>
+                                        <svg class="w-2.5 h-2.5 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
+                                        </svg>
+                                    </a>
+                                <?php endif; ?>
+                                </li>
+                            </ul>
+                            </nav>
                         </div>
                     </div>
                 </div>
@@ -256,6 +291,7 @@
                 success: function(data){
                     // console.log('Success Response:', data);
                     const letterContainer = document.querySelector(".letter-card table tbody");
+                    const navElement = document.querySelector('nav[aria-label="Page navigation example"]');
                     const tableHeader = `
                         <thead>
                             <tr class="text-left text-sm font-medium text-gray-500">
@@ -269,6 +305,7 @@
 
                     // Clear existing rows and add table header
                     letterContainer.innerHTML = '';
+                    navElement.innerHTML = '';
 
                     // Populate table rows with data
                     data.forEach(letter => {
@@ -299,6 +336,67 @@
                 }
             });
         }
+
+        //live search ajax
+        const keyword = document.getElementById('keyword');
+        let debounceTimeout;
+
+        keyword.addEventListener('keyup', function() {
+            // console.log(keyword.value)
+            clearTimeout(debounceTimeout);
+            debounceTimeout = setTimeout(function() {
+                $.ajax({
+                    url: '<?= BASEURL ?>/letter/search',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: { keyword : keyword.value},
+                    success: function(data){
+                        // console.log('Success Response:', data);
+                    const letterContainer = document.querySelector(".letter-card table tbody");
+                    const navElement = document.querySelector('nav[aria-label="Page navigation example"]');
+                    const tableHeader = `
+                        <thead>
+                            <tr class="text-left text-sm font-medium text-gray-500">
+                                <th class="pb-4">Jenis Dokumen</th>
+                                <th class="pb-4">Tanggal</th>
+                                <th class="pb-4">Status</th>
+                                <th class="pb-4">Aksi</th>
+                            </tr>
+                        </thead>
+                    `;
+
+                    // Clear existing rows and add table header
+                    letterContainer.innerHTML = '';
+                    navElement.innerHTML = '';
+
+                    // Populate table rows with data
+                    data.forEach(letter => {
+                        const statusBadge = letter.status === 1
+                            ? '<span class="px-3 py-1 text-xs font-medium text-yellow-700 bg-yellow-100 rounded-full">Tertunda</span>'
+                            : letter.status === 2
+                                ? '<span class="px-3 py-1 text-xs font-medium text-green-700 bg-green-100 rounded-full">Disetujui</span>'
+                                : '<span class="px-3 py-1 text-xs font-medium text-red-700 bg-red-100 rounded-full">Ditolak</span>';
+
+                        const row = `
+                            <tr class="border-t border-gray-100">
+                                <td class="py-4">${letter.title}</td>
+                                <td class="py-4">${letter.date}</td>
+                                <td class="py-4">${statusBadge}</td>
+                                <td class="py-4">
+                                    <button onclick="viewLetter(${letter.letter_id})" class="text-blue-600 hover:text-blue-800">Lihat Detail</button>
+                                </td>
+                            </tr>
+                        `;
+                        letterContainer.innerHTML += row;
+                    });
+                    },
+                    error: function(){
+                        console.log('Error terjadi dalam request');
+                    }
+                });
+            }, 500);
+        });
+
     </script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </body>

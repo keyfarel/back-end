@@ -48,6 +48,14 @@ class LettersModel{
         return $this->db->resultSet();
     }
 
+    public function getLetterByUserIdPaginate($id, $awalData, $jumlahDataPerhalaman) {
+        $this->db->query('SELECT * FROM letters WHERE user_id = :id LIMIT :awalData, :jumlahDataPerhalaman');
+        $this->db->bind(':id', $id);
+        $this->db->bind(':awalData', $awalData);
+        $this->db->bind(':jumlahDataPerhalaman', $jumlahDataPerhalaman);
+        return $this->db->resultSet();
+    }
+
     public function getLetterByUserIdPending($id) {
         $this->db->query('SELECT * FROM letters WHERE status = 1 AND user_id = :id');
         $this->db->bind(':id', $id);
@@ -116,6 +124,14 @@ class LettersModel{
         $this->db->query('SELECT COUNT(status) AS total FROM letters WHERE status = 2');
         $this->db->execute();
         return $this->db->single();
+    }
+
+    public function searchLetter($user_id, $keyword){
+        $this->db->query('SELECT * FROM letters WHERE user_id = :user_id AND title LIKE :keyword OR date LIKE :keyword');
+        $this->db->bind(':user_id', $user_id);
+        $this->db->bind(':keyword', '%' . $keyword . '%');
+        $this->db->execute();
+        return $this->db->resultSet();
     }
 
 }
