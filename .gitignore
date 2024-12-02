@@ -1,3 +1,10 @@
+# Dependency
+/vendor/
+composer.lock
+
+# Node Modules
+/node_modules/
+
 # Environment
 .env
 .env.local

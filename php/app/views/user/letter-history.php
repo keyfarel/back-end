@@ -73,7 +73,7 @@
                             <div class="flex items-center justify-between">
                                 <div>
                                     <p class="text-sm font-medium text-blue-600">Total Surat</p>
-                                    <p class="text-2xl font-bold text-blue-900">12</p>
+                                    <p class="text-2xl font-bold text-blue-900"><?= $data['letter']['total'] ?></p>
                                 </div>
                                 <div class="p-3 bg-blue-50 rounded-xl">
                                     <svg class="w-6 h-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -92,14 +92,17 @@
                         <div class="p-6 border-b border-blue-100">
                             <div class="flex justify-between items-center">
                                 <div class="flex items-center space-x-4">
-                                    <button class="px-4 py-2 text-blue-600 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors">
+                                    <button class="px-4 py-2 text-blue-600 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors" onclick="filter(0)">
                                         Semua
                                     </button>
-                                    <button class="px-4 py-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors">
+                                    <button class="px-4 py-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"  onclick="filter(2)">
                                         Disetujui
                                     </button>
-                                    <button class="px-4 py-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors">
+                                    <button class="px-4 py-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"  onclick="filter(1)">
                                         Tertunda
+                                    </button>
+                                    <button class="px-4 py-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"  onclick="filter(3)">
+                                        Ditolak
                                     </button>
                                 </div>
                                 <div class="relative">
@@ -115,7 +118,7 @@
 
                         <!-- Letters List -->
                         <div class="p-6 space-y-4">
-                            <?php if (empty($letters)) : ?>
+                            <?php if (empty($data['allLetters'])) : ?>
                                 <div class="text-center py-12">
                                     <svg class="w-16 h-16 text-blue-200 mx-auto mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
@@ -134,11 +137,46 @@
                                 </div>
                             <?php else : ?>
                                 <!-- Letter Cards -->
-                                <?php foreach ($letters as $letter) : ?>
-                                    <div class="letter-card bg-white p-6 rounded-xl border-2 border-blue-100 hover:border-blue-300">
-                                        <!-- Letter content here -->
-                                    </div>
-                                <?php endforeach; ?>
+                                <div class="letter-card bg-white p-6 rounded-xl border-2 border-blue-100 hover:border-blue-300">
+                                    <!-- Letter content here -->
+                                    <table class="w-full">
+                                        <thead>
+                                        <tr class="text-left text-sm font-medium text-gray-500">
+                                            <th class="pb-4">Jenis Dokumen</th>
+                                            <th class="pb-4">Tanggal</th>
+                                            <th class="pb-4">Status</th>
+                                            <th class="pb-4">Aksi</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <!-- Sample submission row -->
+                                        <?php foreach($data['allLetters'] AS $letter) :?>
+                                        <tr class="border-t border-gray-100">
+                                            <td class="py-4"><?= $letter['title'] ?></td>
+                                            <td class="py-4"><?= $letter['date'] ?></td>
+                                            <td class="py-4">
+                                                <?php if($letter['status'] == 1) :?>
+                                                    <span class="px-3 py-1 text-xs font-medium text-yellow-700 bg-yellow-100 rounded-full">
+                                                        Tertunda
+                                                    </span>
+                                                <?php elseif($letter['status'] == 2) :?>
+                                                    <span class="px-3 py-1 text-xs font-medium text-green-700 bg-green-100 rounded-full">
+                                                        disetujui
+                                                    </span>
+                                                <?php else :?>
+                                                    <span class="px-3 py-1 text-xs font-medium text-red-700 bg-red-100 rounded-full">
+                                                        ditolak
+                                                    </span>
+                                                <?php endif ?>
+                                            </td>
+                                            <td class="py-4">
+                                                <button onclick="viewLetter(<?= $letter['letter_id']; ?>)" class="text-blue-600 hover:text-blue-800">Lihat Detail</button>
+                                            </td>
+                                        </tr>
+                                        <?php endforeach; ?>
+                                        </tbody>
+                                    </table>
+                                </div>
                             <?php endif; ?>
                         </div>
                     </div>
@@ -148,34 +186,50 @@
     </div>
 
     <!-- Preview Modal -->
-    <div id="previewModal" class="fixed inset-0 bg-blue-900/50 backdrop-blur-sm hidden items-center justify-center z-50">
-        <div class="bg-white rounded-xl max-w-3xl w-full mx-4 max-h-[90vh] overflow-y-auto">
-            <div class="p-6 border-b border-blue-100">
-                <div class="flex justify-between items-center">
-                    <h3 class="text-xl font-bold text-blue-900">Preview Surat</h3>
-                    <button onclick="closePreview()" class="text-blue-600 hover:text-blue-800">
-                        <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-                        </svg>
-                    </button>
-                </div>
+    <div id="letterModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center">
+        <div class="bg-white rounded-2xl p-8 max-w-2xl w-full mx-4">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold text-blue-900">Detail Surat</h3>
+                <button onclick="closeLetterModal()" class="text-gray-500 hover:text-gray-700">
+                    <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
             </div>
-            <div class="p-6">
-                <iframe id="pdfPreview" class="w-full h-[60vh] rounded-lg border-2 border-blue-100"></iframe>
+            <div id="letterContent">
+                <!-- Letter content will be loaded here -->
             </div>
         </div>
     </div>
 
     <script>
-        function previewLetter(url) {
-            document.getElementById('pdfPreview').src = url;
-            document.getElementById('previewModal').classList.remove('hidden');
-            document.getElementById('previewModal').classList.add('flex');
+        function viewLetter(id) {
+            // Implementation for viewing letter
+            document.getElementById('letterModal').classList.remove('hidden');
+            document.getElementById('letterModal').classList.add('flex');
+
+            $.ajax({
+                url: '<?= BASEURL ?>/letter/getLetter',
+                method: 'POST',
+                dataType: 'json',
+                data: { id : id},
+                success: function(data){
+                    console.log(data);
+                    // Implementation for viewing letter
+                    const letterContent = document.getElementById('letterContent');
+                    letterContent.innerHTML = `
+                        <iframe src="${data}" width="100%" height="500px"></iframe>
+                    `;
+                },
+                error: function(data){
+                    alert('Gagal');
+                }
+            });
         }
 
-        function closePreview() {
-            document.getElementById('previewModal').classList.add('hidden');
-            document.getElementById('previewModal').classList.remove('flex');
+        function closeLetterModal() {
+            document.getElementById('letterModal').classList.add('hidden');
+            document.getElementById('letterModal').classList.remove('flex');
         }
 
         // Animation observer
@@ -192,6 +246,60 @@
         document.querySelectorAll('.slide-up, .fade-in').forEach(el => {
             observer.observe(el);
         });
+
+        function filter(status){
+            $.ajax({
+                url: '<?= BASEURL ?>/letter/filter',
+                method: 'POST',
+                dataType: 'json',
+                data: { status : status},
+                success: function(data){
+                    // console.log('Success Response:', data);
+                    const letterContainer = document.querySelector(".letter-card table tbody");
+                    const tableHeader = `
+                        <thead>
+                            <tr class="text-left text-sm font-medium text-gray-500">
+                                <th class="pb-4">Jenis Dokumen</th>
+                                <th class="pb-4">Tanggal</th>
+                                <th class="pb-4">Status</th>
+                                <th class="pb-4">Aksi</th>
+                            </tr>
+                        </thead>
+                    `;
+
+                    // Clear existing rows and add table header
+                    letterContainer.innerHTML = '';
+
+                    // Populate table rows with data
+                    data.forEach(letter => {
+                        const statusBadge = letter.status === 1
+                            ? '<span class="px-3 py-1 text-xs font-medium text-yellow-700 bg-yellow-100 rounded-full">Tertunda</span>'
+                            : letter.status === 2
+                                ? '<span class="px-3 py-1 text-xs font-medium text-green-700 bg-green-100 rounded-full">Disetujui</span>'
+                                : '<span class="px-3 py-1 text-xs font-medium text-red-700 bg-red-100 rounded-full">Ditolak</span>';
+
+                        const row = `
+                            <tr class="border-t border-gray-100">
+                                <td class="py-4">${letter.title}</td>
+                                <td class="py-4">${letter.date}</td>
+                                <td class="py-4">${statusBadge}</td>
+                                <td class="py-4">
+                                    <button onclick="viewLetter(${letter.letter_id})" class="text-blue-600 hover:text-blue-800">Lihat Detail</button>
+                                </td>
+                            </tr>
+                        `;
+                        letterContainer.innerHTML += row;
+                    });
+                },
+                error: function(xhr, status, error){
+                    console.error('Error Status:', status);
+                    console.error('Error Details:', error);
+                    console.error('Response Text:', xhr.responseText); 
+                    alert('Gagal');
+                }
+            });
+        }
     </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </body>
 </html>

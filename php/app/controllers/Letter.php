@@ -194,9 +194,38 @@ class Letter extends Controller{
         $this->checkSessionTimeOut();
         if($role == 2){
             $this->saveLastVisitedPage();
-            $this->view('user/letter-history');
+            $data['letter'] = $this->model('LettersModel')->countAllLeterbyUserId($_SESSION['user_id']);
+            $data['allLetters'] = $this->model('LettersModel')->getLetterByUserId($_SESSION['user_id']);
+            $this->view('user/letter-history', $data);
         }else{
             header('Location: ' . $this->getLastVisitedPage());
         }
+    }
+
+    public function filter(){
+        session_start();
+        $status = $_POST['status'];
+        $userId = $_SESSION['user_id']; // Mengambil user ID dari sesi
+
+        switch ($status) {
+            case 0: // Semua surat
+                $letters = $this->model('LettersModel')->getLetterByUserId($userId);
+                break;
+            case 1: // Surat tertunda
+                $letters = $this->model('LettersModel')->getLetterByUserIdPending($userId);
+                break;
+            case 2: // Surat disetujui
+                $letters = $this->model('LettersModel')->getLetterByUserIdVerify($userId);
+                break;
+            case 3: // Surat ditolak
+                $letters = $this->model('LettersModel')->getLetterByUserIdReject($userId);
+                break;
+            default:
+                echo json_encode(['error' => 'Invalid status']);
+                return;
+        }
+
+        // error_log(json_encode($letters)); // Debug output
+        echo json_encode($letters);
     }
 }

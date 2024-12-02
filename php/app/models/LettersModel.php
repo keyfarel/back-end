@@ -41,6 +41,29 @@ class LettersModel{
         $this->db->bind(':id', $id);
         return $this->db->resultSet();
     }
+
+    public function getLetterByUserId($id) {
+        $this->db->query('SELECT * FROM letters WHERE user_id = :id');
+        $this->db->bind(':id', $id);
+        return $this->db->resultSet();
+    }
+
+    public function getLetterByUserIdPending($id) {
+        $this->db->query('SELECT * FROM letters WHERE status = 1 AND user_id = :id');
+        $this->db->bind(':id', $id);
+        return $this->db->resultSet();
+    }
+
+    public function getLetterByUserIdVerify($id) {
+        $this->db->query('SELECT * FROM letters WHERE status = 2 AND user_id = :id');
+        $this->db->bind(':id', $id);
+        return $this->db->resultSet();
+    }
+    public function getLetterByUserIdReject($id) {
+        $this->db->query('SELECT * FROM letters WHERE status = 3 AND user_id = :id');
+        $this->db->bind(':id', $id);
+        return $this->db->resultSet();
+    }
     
     public function updateStatusLetter($id, $status){
         $this->db->query('UPDATE ' . $this->table . ' SET status = :status WHERE letter_id = :id ');
@@ -53,6 +76,13 @@ class LettersModel{
         } else {
             return 0;  // Jika tidak ada baris yang terpengaruh
         }
+    }
+
+    public function countAllLeterbyUserId($user_id){
+        $this->db->query('SELECT COUNT(file_url) AS total FROM letters WHERE user_id = :user_id');
+        $this->db->bind(':user_id', $user_id);
+        $this->db->execute();
+        return $this->db->single();
     }
 
     public function countPendingStat($user_id){
