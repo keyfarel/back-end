@@ -1,5 +1,5 @@
 <!-- Remove all DOCTYPE, html, head, and body tags. Keep only the section content -->
-<section class="min-h-screen flex items-center relative overflow-hidden">
+<section class="min-h-screen flex items-center relative overflow-hidden" id="beranda">
     <div class="container mx-auto px-6">
         <div class="swiss-grid items-center">
             <div class="col-span-12 lg:col-span-5 space-y-8 stagger-animation">

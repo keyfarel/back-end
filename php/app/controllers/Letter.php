@@ -187,4 +187,16 @@ class Letter extends Controller{
     //         return false;
     //     }
     // }
+
+    public function letterHistoryView(){
+        $this->checkLogin();
+        $role = $this->checkRole();
+        $this->checkSessionTimeOut();
+        if($role == 2){
+            $this->saveLastVisitedPage();
+            $this->view('user/letter-history');
+        }else{
+            header('Location: ' . $this->getLastVisitedPage());
+        }
+    }
 }

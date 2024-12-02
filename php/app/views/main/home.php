@@ -29,6 +29,9 @@ session_start();
 <div id="Roadmap">
     <?php include_once '../app/views/assets/components/LandingPage/roadmap.php'; ?>
 </div>
+<div id="Organisasi">
+    <?php include_once '../app/views/assets/components/LandingPage/strukturOrganisasi.php'; ?>
+</div>
 <div id="Pengelola">
     <?php include_once '../app/views/assets/components/LandingPage/pengelola.php'; ?>
 </div>

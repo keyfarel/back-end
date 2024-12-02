@@ -1,6 +1,4 @@
 <?php 
-//var_dump($data);
-
 $filteredLetters = array_filter($data['allLetters'], function($letter) {
     return $letter['status'] == 1;
 });
