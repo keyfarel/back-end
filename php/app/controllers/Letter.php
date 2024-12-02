@@ -2,6 +2,7 @@
 
 use Dompdf\Dompdf;
 use Dompdf\Options;
+use GuzzleHttp\Psr7\Query;
 use Symfony\Component\VarDumper\VarDumper;
 
 class Letter extends Controller{
@@ -194,8 +195,16 @@ class Letter extends Controller{
         $this->checkSessionTimeOut();
         if($role == 2){
             $this->saveLastVisitedPage();
+            $jumlahDataperhalaman = 3;
+            $jumlahData = count($this->model('LettersModel')->getLetterByUserId($_SESSION['user_id']));
+            $jumlahHalaman = ceil($jumlahData / $jumlahDataperhalaman);
+            $halamanAktif = ( isset($_GET["halaman"]) ) ? $_GET["halaman"] : 1;
+            $awalData = ($jumlahDataperhalaman * $halamanAktif) - $jumlahDataperhalaman;
+            
+            $data['jumlahHalaman'] = $jumlahHalaman;
+            $data['halamanAktif'] = $halamanAktif;
             $data['letter'] = $this->model('LettersModel')->countAllLeterbyUserId($_SESSION['user_id']);
-            $data['allLetters'] = $this->model('LettersModel')->getLetterByUserId($_SESSION['user_id']);
+            $data['allLetters'] = $this->model('LettersModel')->getLetterByUserIdPaginate($_SESSION['user_id'], $awalData, $jumlahDataperhalaman);
             $this->view('user/letter-history', $data);
         }else{
             header('Location: ' . $this->getLastVisitedPage());
@@ -226,6 +235,16 @@ class Letter extends Controller{
         }
 
         // error_log(json_encode($letters)); // Debug output
+        echo json_encode($letters);
+    }
+
+    public function search(){
+        session_start();
+        $session = $_SESSION['user_id'];
+        $keyword = $_POST['keyword'];
+
+        $letters = $this->model('LettersModel')->searchLetter($session, $keyword);
+        // Lakukan pencarian berdasarkan keyword dan kirimkan hasilnya dalam format JSON
         echo json_encode($letters);
     }
 }
