@@ -37,7 +37,7 @@ class LettersModel{
     }
 
     public function getLetterByUserIdLimit($id) {
-        $this->db->query('SELECT * FROM letters WHERE user_id = :id ORDER BY date DESC LIMIT 5');
+        $this->db->query('SELECT TOP 5 * FROM letters WHERE user_id = :id ORDER BY date DESC');
         $this->db->bind(':id', $id);
         return $this->db->resultSet();
     }

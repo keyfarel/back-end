@@ -33,7 +33,7 @@ session_start();
     <?php include_once '../app/views/assets/components/LandingPage/pengelola.php'; ?>
 </div>
 <div id="Peneliti">
-    <?php include_once '../app/views/assets/components/LandingPage/peneliti.php'; ?>
+    <?php include_once '../app/views/assets/components/LandingPage/researchers-list.php'; ?>
 </div>
 <?php include_once '../app/views/assets/components/footer.php'; ?>
 <!-- Add data.js script -->
