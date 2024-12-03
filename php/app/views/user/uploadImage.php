@@ -27,7 +27,7 @@
 
                     <!-- Form Section -->
                     <div class="bg-white rounded-2xl border-2 border-blue-100 p-8">
-                        <form action="/IsFor-Website/App/controllers/imagecontroller.php" method="POST" enctype="multipart/form-data">
+                        <form action="<?= BASEURL; ?>/galleries/uploadImg" method="POST" enctype="multipart/form-data">
                             <div class="space-y-6">
                                 <!-- Judul Gambar -->
                                 <div>
