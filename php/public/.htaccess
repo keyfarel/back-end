@@ -3,7 +3,7 @@
 Options -Multiviews
 RewriteEngine On
 
-# Jika permintaan bukan file atau folder, rewrite ke index.php
+# Jika permintaan bukan files atau folder, rewrite ke index.php
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.+)$ index.php?url=$1 [QSA,L]

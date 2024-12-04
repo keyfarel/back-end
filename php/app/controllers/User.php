@@ -42,7 +42,7 @@ class User extends Controller
     public function upload()
     {
         if (!isset($_FILES['profile_picture'])) {
-            echo "Tidak ada file yang diunggah.";
+            echo "Tidak ada files yang diunggah.";
             return false;
         }
         var_dump($_FILES);
@@ -75,7 +75,7 @@ class User extends Controller
         }
 
         //lolos pengecekan, gambar siap diupload
-        // generate nama file baru
+        // generate nama files baru
         $newFileName = uniqid();
         $newFileName .= '.';
         $newFileName .= $extensionImage;

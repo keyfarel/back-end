@@ -126,8 +126,14 @@
      }
 
      public function execute() {
-         $this->stmt->execute();
+         try {
+             return $this->stmt->execute();
+         } catch (PDOException $e) {
+             error_log("Database Error: " . $e->getMessage());
+             return false;
+         }
      }
+
 
      public function resultSet() {
          $this->execute();

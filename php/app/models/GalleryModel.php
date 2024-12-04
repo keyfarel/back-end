@@ -1,25 +1,31 @@
 <?php
-class Gallery {
+class GalleryModel {
     private $db;
     private $table = 'galleries';
 
-    public function __construct($db) {
-        $this->db = $db;
+    public function __construct() {
+        $this->db = new Database;
     }
 
     // Create a new gallery entry
     public function create($image, $category, $title, $status, $uploaded_by) {
+        $status = 1;  // 1 untuk pending
+
         $query = "INSERT INTO " . $this->table . " (image, category, title, status, uploaded_by, created_at)
-                  VALUES (:image, :category, :title, :status, :uploaded_by, GETDATE())";
-        $stmt = $this->db->prepare($query);
+              VALUES (:image, :category, :title, :status, :uploaded_by, GETDATE())";
 
-        $stmt->bindParam(':image', $image);
-        $stmt->bindParam(':category', $category);
-        $stmt->bindParam(':title', $title);
-        $stmt->bindParam(':status', $status);
-        $stmt->bindParam(':uploaded_by', $uploaded_by);
+        // Gunakan metode query dari kelas Database
+        $this->db->query($query);
 
-        return $stmt->execute();
+        // Bind parameter menggunakan metode bind dari kelas Database
+        $this->db->bind(':image', $image);
+        $this->db->bind(':category', $category);
+        $this->db->bind(':title', $title);
+        $this->db->bind(':status', $status);
+        $this->db->bind(':uploaded_by', $uploaded_by);
+
+        // Eksekusi query
+        return $this->db->execute();
     }
 
     // Read all gallery entries
@@ -29,8 +35,15 @@ class Gallery {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function getPendingImages() {
+        $query = "SELECT * FROM " . $this->table . " WHERE status = 1";
+        $this->db->query($query);
+        $result = $this->db->resultSet();
+        return $result;
+    }
+
     // Read a specific gallery entry by ID
-    public function getById($id) {
+    public function getImageById($id) {
         $query = "SELECT * FROM " . $this->table . " WHERE gallery_id = :id";
         $stmt = $this->db->prepare($query);
         $stmt->bindParam(':id', $id);
@@ -52,6 +65,16 @@ class Gallery {
         $stmt->bindParam(':status', $status);
 
         return $stmt->execute();
+    }
+
+    // Update status to "verified" or "rejected"
+    public function updateStatus($id, $status) {
+        $query = "UPDATE " . $this->table . " SET status = :status WHERE gallery_id = :id";
+        $this->db->query($query);
+        $this->db->bind('status', $status);
+        $this->db->bind('id', $id);
+
+        return $this->db->execute();
     }
 
     // Delete a gallery entry

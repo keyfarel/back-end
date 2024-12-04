@@ -141,7 +141,7 @@ class Letter extends Controller{
     
         $affectedRows = $this->model('LettersModel')->updateStatusLetter($id, $status);
         if ($affectedRows > 0) {
-            // Ambil nama file berdasarkan ID
+            // Ambil nama files berdasarkan ID
             $fileName = $this->model('LettersModel')->getLetterById($id);
             
             // Validasi fileName
@@ -152,9 +152,9 @@ class Letter extends Controller{
             
             // $pathUpdate = $this->changePathFile($status, $fileName);
             // if ($pathUpdate) {
-            //     echo json_encode(['success' => true, 'message' => 'Status diperbarui dan file berhasil dipindahkan']);
+            //     echo json_encode(['success' => true, 'message' => 'Status diperbarui dan files berhasil dipindahkan']);
             // } else {
-            //     echo json_encode(['success' => false, 'message' => 'Gagal memindahkan file']);
+            //     echo json_encode(['success' => false, 'message' => 'Gagal memindahkan files']);
             // }
 
             echo json_encode(['success' => true, 'message' => 'Status berhasil diperbarui']);
@@ -164,7 +164,7 @@ class Letter extends Controller{
         }
     }
 
-    // // function untuk merubah path file
+    // // function untuk merubah path files
     // public function changePathFile($status, $fileName){
     //     // Tentukan path sumber dan tujuan
     //     if ($status == 2) {  // Status Verified
@@ -175,16 +175,16 @@ class Letter extends Controller{
     //         $destPath = realpath(__DIR__ . '/../letters/reject/' . $fileName);
     //     }
 
-    //     // Pastikan file ada sebelum mencoba untuk memindahkannya
+    //     // Pastikan files ada sebelum mencoba untuk memindahkannya
     //     if (file_exists($sourcePath)) {
     //         if (copy($sourcePath, $destPath)) {
     //             return true;  // Cukup mengembalikan true atau false
     //         } else {
-    //             // Jika gagal memindahkan file
+    //             // Jika gagal memindahkan files
     //             return false;
     //         }
     //     } else {
-    //         // Jika file sumber tidak ditemukan
+    //         // Jika files sumber tidak ditemukan
     //         return false;
     //     }
     // }
