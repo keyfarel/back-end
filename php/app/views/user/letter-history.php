@@ -333,7 +333,6 @@
                 letterContainer.innerHTML = '';
                 navElement.innerHTML = '';
 
-
                 // Populate table rows with data
                 data.forEach(letter => {
                     console.log(letter.status);
@@ -405,11 +404,15 @@
 
                     // Populate table rows with data
                     data.forEach(letter => {
-                        const statusBadge = letter.status === 1
-                            ? '<span class="px-3 py-1 text-xs font-medium text-yellow-700 bg-yellow-100 rounded-full">Tertunda</span>'
-                            : letter.status === 2
-                                ? '<span class="px-3 py-1 text-xs font-medium text-green-700 bg-green-100 rounded-full">Disetujui</span>'
-                                : '<span class="px-3 py-1 text-xs font-medium text-red-700 bg-red-100 rounded-full">Ditolak</span>';
+                        let statusBadge = '';
+
+                        if (letter.status == 1) {
+                        statusBadge = '<span class="px-3 py-1 text-xs font-medium text-yellow-700 bg-yellow-100 rounded-full">Tertunda</span>';
+                    } else if (letter.status == 2) {
+                        statusBadge = '<span class="px-3 py-1 text-xs font-medium text-green-700 bg-green-100 rounded-full">Disetujui</span>';
+                    } else {
+                        statusBadge = '<span class="px-3 py-1 text-xs font-medium text-red-700 bg-red-100 rounded-full">Ditolak</span>';
+                    }
 
                         const row = `
                             <tr class="border-t border-gray-100">
