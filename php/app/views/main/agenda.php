@@ -1,5 +1,6 @@
 <?php 
 session_start();
+// var_dump($data);
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -86,18 +87,18 @@ session_start();
                 ]
             ];
 
-            foreach ($agendaTopics as $topic): ?>
+            foreach ($data['agenda'] as $topic): ?>
                 <div class="agenda-item group">
                     <div class="flex items-start space-x-8 p-8 border-2 border-gray-100 hover:border-blue-200 transition-all duration-300">
                         <div class="number-label text-6xl font-bold leading-none">
-                            <?php echo $topic['number']; ?>
+                            <?php echo $data['no']++; ?>
                         </div>
                         <div class="flex-1 pt-2">
                             <h3 class="text-2xl font-bold text-blue-900 mb-3 group-hover:text-blue-600 transition-colors duration-300">
                                 <?php echo $topic['title']; ?>
                             </h3>
                             <p class="text-gray-600 leading-relaxed">
-                                <?php echo $topic['description']; ?>
+                                <?php echo $topic['deskripsi']; ?>
                             </p>
                         </div>
                     </div>
