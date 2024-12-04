@@ -1,28 +1,28 @@
 import { BASEURL } from "./config.js";
 
-const navItems = [
-  {name: 'Beranda', href: '/isfor-web/App/views/main/home.php'},
-  {
-    name: 'Tentang Kami',
-    dropdownItems: [
-      {name: 'Sejarah', href: '#Sejarah'},
-      {name: 'Visi Misi', href: '#Visimisi'},
-      {name: 'Roadmap', href: '#Roadmap'},
-      {name: 'Pengelola', href: '#Pengelola'},
-      {name: 'List Peneliti', href: '#Peneliti'},
-    ],
-  },
-  {
-    name: 'Riset & Publikasi',
-    dropdownItems: [
-      {name: 'Penelitian', href: '#'},
-      {name: 'Hasil Peneliti', href: '#'},
-    ],
-  },
-  {name: 'Agenda', href: '#agenda'},
-  {name: 'Arsip', dropdownItems: [{name: 'Dokumen', href: '#'}]},
-  {name: 'Galeri', href: `${BASEURL}/galeri`},
-];
+// const navItems = [
+//   {name: 'Beranda', href: '/isfor-Website/php/public'},
+//   {
+//     name: 'Tentang Kami',
+//     dropdownItems: [
+//       {name: 'Sejarah', href: '#Sejarah'},
+//       {name: 'Visi Misi', href: '#Visimisi'},
+//       {name: 'Roadmap', href: '#Roadmap'},
+//       {name: 'Pengelola', href: '#Pengelola'},
+//       {name: 'List Peneliti', href: '#Peneliti'},
+//     ],
+//   },
+//   {
+//     name: 'Riset & Publikasi',
+//     dropdownItems: [
+//       {name: 'Penelitian', href: '#'},
+//       {name: 'Hasil Peneliti', href: '#'},
+//     ],
+//   },
+//   {name: 'Agenda', href: '#agenda'},
+//   {name: 'Arsip', dropdownItems: [{name: 'Dokumen', href: '#'}]},
+//   {name: 'Galeri', href: `${BASEURL}/galeri`},
+// ];
 
 // Render navigation items
 const renderNavItems = () => {
