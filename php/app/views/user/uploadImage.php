@@ -117,17 +117,18 @@
 </div>
 
 <script>
-    // Image preview functionality
-    document.getElementById('file-upload').addEventListener('change', function (e) {
-        const file = e.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function (e) {
-                document.getElementById('preview').src = e.target.result;
-                document.getElementById('imagePreview').classList.remove('hidden');
+    document.addEventListener("DOMContentLoaded", function () {
+        document.getElementById('file-upload').addEventListener('change', function (e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    document.getElementById('preview').src = e.target.result;
+                    document.getElementById('imagePreview').classList.remove('hidden');
+                };
+                reader.readAsDataURL(file);
             }
-            reader.readAsDataURL(file);
-        }
+        });
     });
 </script>
 </body>

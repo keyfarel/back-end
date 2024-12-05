@@ -1,6 +1,6 @@
 <?php
 
-//file untuk memecah url 
+//files untuk memecah url
 
 class App {
     protected $controller = 'Home';
