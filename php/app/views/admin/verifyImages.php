@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+    <!DOCTYPE html>
 <html lang="id" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Verifikasi Gambar - IsFor PRI</title>
+    <title>Verifikasi Gambar - IsFor</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap"
           rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
@@ -70,7 +70,6 @@
                 <?php else: ?>
                     <?php foreach ($data['images'] as $image): ?>
                         <div class="image-card bg-white rounded-2xl border-2 border-blue-100 overflow-hidden">
-<!--                            <p>Path Gambar: --><?php //= GALLERY; ?><!--/files/--><?php //= htmlspecialchars($image['image']); ?><!--</p>-->
                             <img src="<?= GALLERY; ?>/files/<?= htmlspecialchars($image['image']); ?>"
                                  alt="Gambar <?= htmlspecialchars($image['title']); ?>"/>
                             <div class="p-6">

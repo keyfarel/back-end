@@ -16,6 +16,9 @@ class Galleries extends Controller
         if ($role == 2) {
             $this->saveLastVisitedPage();
             $this->view('user/uploadImage');
+        } else if ($role == 1) {
+            $this->saveLastVisitedPage();
+            $this->view('admin/upload-image');
         } else {
             header('Location: ' . $this->getLastVisitedPage());
         }
@@ -40,14 +43,26 @@ class Galleries extends Controller
     }
  
 
+
     public function imgHistoryView()
     {
         $this->checkLogin();
         $role = $this->checkRole();
         $this->checkSessionTimeOut();
+
         if ($role == 2) {
             $this->saveLastVisitedPage();
-            $this->view('user/image-history');
+
+            $galleryModel = $this->model('GalleryModel');
+            $userId = $_SESSION['user_id']; // Mengambil ID pengguna dari session
+
+            $totalImages = $galleryModel->countImagesByUser($userId);
+            $images = $galleryModel->getImagesByUser($userId); // Mendapatkan gambar user
+
+            $this->view('user/image-history', [
+                'totalImages' => $totalImages,
+                'images' => $images // Mengirim data gambar ke view
+            ]);
         } else {
             header('Location: ' . $this->getLastVisitedPage());
         }
@@ -89,7 +104,9 @@ class Galleries extends Controller
                             $uploadSuccess = $this->model('GalleryModel')->create($uniqueName, $category, $title, $status, $_SESSION['user_id']);
                             if ($uploadSuccess) {
                                 header('Location: ' . BASEURL . '/galleries/uploadImgView');
+
                                 exit(); // Pastikan untuk menghentikan eksekusi setelah header
+
                             } else {
                                 error_log("Database insert failed for image upload.");
                                 echo "Gagal menyimpan informasi gambar.";

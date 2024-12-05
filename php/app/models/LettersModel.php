@@ -37,7 +37,8 @@ class LettersModel{
     }
 
     public function getLetterByUserIdLimit($id) {
-        $this->db->query('SELECT TOP 5 * FROM letters WHERE user_id = :id ORDER BY date DESC');
+        // $this->db->query('SELECT TOP 5 * FROM letters WHERE user_id = :id ORDER BY date DESC');
+        $this->db->query('SELECT * FROM letters WHERE user_id = :id ORDER BY date DESC LIMIT 5');
         $this->db->bind(':id', $id);
         return $this->db->resultSet();
     }
@@ -48,18 +49,35 @@ class LettersModel{
         return $this->db->resultSet();
     }
 
+    // // sql server
+    // public function getLetterByUserIdPaginate($id, $awalData, $jumlahDataPerhalaman) {
+    //     $query = 'SELECT * 
+    //           FROM letters 
+    //           WHERE user_id = :id 
+    //           ORDER BY date DESC 
+    //           OFFSET :awalData ROWS 
+    //           FETCH NEXT :jumlahDataPerhalaman ROWS ONLY';
+
+    //     $this->db->query($query);
+    //     $this->db->bind(':id', $id);
+    //     $this->db->bind(':awalData', $awalData, PDO::PARAM_INT);
+    //     $this->db->bind(':jumlahDataPerhalaman', $jumlahDataPerhalaman, PDO::PARAM_INT);
+    //     return $this->db->resultSet();
+    // }
+
+
+    //mysql
     public function getLetterByUserIdPaginate($id, $awalData, $jumlahDataPerhalaman) {
         $query = 'SELECT * 
-              FROM letters 
-              WHERE user_id = :id 
-              ORDER BY date DESC 
-              OFFSET :awalData ROWS 
-              FETCH NEXT :jumlahDataPerhalaman ROWS ONLY';
-
+                    FROM letters 
+                    WHERE user_id = :id 
+                    ORDER BY date DESC 
+                    LIMIT :awalData, :jumlahDataPerhalaman';
+    
         $this->db->query($query);
         $this->db->bind(':id', $id);
-        $this->db->bind(':awalData', $awalData, PDO::PARAM_INT);
-        $this->db->bind(':jumlahDataPerhalaman', $jumlahDataPerhalaman, PDO::PARAM_INT);
+        $this->db->bind(':awalData', $awalData);
+        $this->db->bind(':jumlahDataPerhalaman', $jumlahDataPerhalaman);
         return $this->db->resultSet();
     }
 

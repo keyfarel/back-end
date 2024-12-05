@@ -1,4 +1,5 @@
 <?php
+
 class GalleryModel {
     private $db;
     private $table = 'galleries';
@@ -8,7 +9,9 @@ class GalleryModel {
     }
 
     // Create a new gallery entry
+
     public function create($image, $category, $title, $status, $uploaded_by) {
+
         $status = 1;  // 1 untuk pending
 
         $query = "INSERT INTO " . $this->table . " (image, category, title, status, uploaded_by, created_at)
@@ -29,7 +32,8 @@ class GalleryModel {
     }
 
     // Read all gallery entries
-    public function getAll() {
+    public function getAll()
+    {
         $query = "SELECT * FROM " . $this->table;
         $stmt = $this->db->query($query);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -43,6 +47,7 @@ class GalleryModel {
     }
 
     // Read a specific gallery entry by ID
+
     public function getImageById($id) {
         $query = "SELECT * FROM " . $this->table . " WHERE gallery_id = :id";
         $stmt = $this->db->prepare($query);
@@ -52,7 +57,8 @@ class GalleryModel {
     }
 
     // Update a gallery entry
-    public function update($id, $image, $category, $title, $status) {
+    public function update($id, $image, $category, $title, $status)
+    {
         $query = "UPDATE " . $this->table . "
                   SET image = :image, category = :category, title = :title, status = :status
                   WHERE gallery_id = :id";
@@ -77,8 +83,36 @@ class GalleryModel {
         return $this->db->execute();
     }
 
+    // GalleryModel.php
+
+    public function countImagesByUser($userId)
+    {
+        $query = "SELECT COUNT(*) as total FROM " . $this->table . " WHERE uploaded_by = :uploaded_by";
+        $this->db->query($query);
+        $this->db->bind(':uploaded_by', $userId);
+        $result = $this->db->single();
+        return $result['total'];
+    }
+
+    public function getImagesByUser($userId)
+    {
+        $query = "SELECT * FROM " . $this->table . " WHERE uploaded_by = :uploaded_by ORDER BY created_at DESC";
+        $this->db->query($query);
+        $this->db->bind(':uploaded_by', $userId);
+        return $this->db->resultSet(); // Mengembalikan semua hasil dalam bentuk array
+    }
+
+    public function getImagesByStatus($status)
+    {
+        $query = "SELECT * FROM " . $this->table . " WHERE status = :status";
+        $this->db->query($query);
+        $this->db->bind(':status', $status);
+        return $this->db->resultSet();
+    }
+
     // Delete a gallery entry
-    public function delete($id) {
+    public function delete($id)
+    {
         $query = "DELETE FROM " . $this->table . " WHERE gallery_id = :id";
         $stmt = $this->db->prepare($query);
         $stmt->bindParam(':id', $id);

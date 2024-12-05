@@ -6,9 +6,12 @@ session_start();
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Agenda - IsFor Internet of Things For Human Life's</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap"
           rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="http://localhost/IsFor-website/php/app/views/assets/css/inandout.css">
+    <script src="http://localhost/IsFor-website/php/app/views/assets/js/animations.js" defer></script>
     <style>
         .agenda-item {
             opacity: 0;
@@ -31,6 +34,7 @@ session_start();
             color: #93C5FD;
         }
     </style>
+    <title>Agenda - IsFor Internet of Things For Human Life's</title>
 </head>
     <?php if (!isset($_SESSION['user_id'])) : ?>
         <?php include_once '../app/views/assets/components/navbar.php'; ?>
@@ -86,23 +90,46 @@ session_start();
                 ]
             ];
 
-            foreach ($agendaTopics as $topic): ?>
-                <div class="agenda-item group">
-                    <div class="flex items-start space-x-8 p-8 border-2 border-gray-100 hover:border-blue-200 transition-all duration-300">
-                        <div class="number-label text-6xl font-bold leading-none">
-                            <?php echo $topic['number']; ?>
-                        </div>
-                        <div class="flex-1 pt-2">
-                            <h3 class="text-2xl font-bold text-blue-900 mb-3 group-hover:text-blue-600 transition-colors duration-300">
-                                <?php echo $topic['title']; ?>
-                            </h3>
-                            <p class="text-gray-600 leading-relaxed">
-                                <?php echo $topic['description']; ?>
-                            </p>
+            if(empty($data['agenda'])){
+                foreach ($agendaTopics as $topic){
+                    ?>
+                    <div class="agenda-item group">
+                        <div class="flex items-start space-x-8 p-8 border-2 border-gray-100 hover:border-blue-200 transition-all duration-300">
+                            <div class="number-label text-6xl font-bold leading-none">
+                                <?php echo $topic['number']; ?>
+                            </div>
+                            <div class="flex-1 pt-2">
+                                <h3 class="text-2xl font-bold text-blue-900 mb-3 group-hover:text-blue-600 transition-colors duration-300">
+                                    <?php echo $topic['title']; ?>
+                                </h3>
+                                <p class="text-gray-600 leading-relaxed">
+                                    <?php echo $topic['description']; ?>
+                                </p>
+                            </div>
                         </div>
                     </div>
-                </div>
-            <?php endforeach; ?>
+                    <?php
+                }
+            } else {
+                foreach ($data['agenda'] as $topic):
+                    ?>
+                    <div class="agenda-item group">
+                        <div class="flex items-start space-x-8 p-8 border-2 border-gray-100 hover:border-blue-200 transition-all duration-300">
+                            <div class="number-label text-6xl font-bold leading-none">
+                                <?php echo $data['no']++; ?>
+                            </div>
+                            <div class="flex-1 pt-2">
+                                <h3 class="text-2xl font-bold text-blue-900 mb-3 group-hover:text-blue-600 transition-colors duration-300">
+                                    <?php echo $topic['title']; ?>
+                                </h3>
+                                <p class="text-gray-600 leading-relaxed">
+                                    <?php echo $topic['description']; ?>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            <?php } ?>
         </div>
     </div>
 

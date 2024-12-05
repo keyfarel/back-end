@@ -19,7 +19,9 @@ class Home extends Controller{
     }
 
     public function agenda(){
-        $this->view('main/agenda');
+        $data['agenda'] = $this->model('AgendaModel')->getAllAgenda();
+        $data['no'] = 1;
+        $this->view('main/agenda', $data);
     }
 
     public function galeri(){
