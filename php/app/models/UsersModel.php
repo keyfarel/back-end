@@ -80,7 +80,7 @@ class UsersModel{
         return $this->db->single();
     }
 
-    //fungsi menghapus img di file profile
+    //fungsi menghapus img di files profile
     public function deleteImage($id){
         $this->db->query('SELECT profile_picture FROM users WHERE user_id = :user_id');
         $this->db->bind(':user_id', $id);

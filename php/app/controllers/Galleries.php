@@ -41,6 +41,7 @@ class Galleries extends Controller
             header('Location: ' . $this->getLastVisitedPage());
         }
     }
+ 
 
 
     public function imgHistoryView()
@@ -66,7 +67,6 @@ class Galleries extends Controller
             header('Location: ' . $this->getLastVisitedPage());
         }
     }
-
 
     public function getImages()
     {
@@ -104,7 +104,9 @@ class Galleries extends Controller
                             $uploadSuccess = $this->model('GalleryModel')->create($uniqueName, $category, $title, $status, $_SESSION['user_id']);
                             if ($uploadSuccess) {
                                 header('Location: ' . BASEURL . '/galleries/uploadImgView');
-                                exit();
+
+                                exit(); // Pastikan untuk menghentikan eksekusi setelah header
+
                             } else {
                                 error_log("Database insert failed for image upload.");
                                 echo "Gagal menyimpan informasi gambar.";

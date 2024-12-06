@@ -1,18 +1,17 @@
 <?php
 
-class GalleryModel
-{
+class GalleryModel {
     private $db;
     private $table = 'galleries';
 
-    public function __construct()
-    {
+    public function __construct() {
         $this->db = new Database;
     }
 
     // Create a new gallery entry
-    public function create($image, $category, $title, $status, $uploaded_by)
-    {
+
+    public function create($image, $category, $title, $status, $uploaded_by) {
+
         $status = 1;  // 1 untuk pending
 
         $query = "INSERT INTO " . $this->table . " (image, category, title, status, uploaded_by, created_at)
@@ -40,8 +39,7 @@ class GalleryModel
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function getPendingImages()
-    {
+    public function getPendingImages() {
         $query = "SELECT * FROM " . $this->table . " WHERE status = 1";
         $this->db->query($query);
         $result = $this->db->resultSet();
@@ -49,8 +47,8 @@ class GalleryModel
     }
 
     // Read a specific gallery entry by ID
-    public function getImageById($id)
-    {
+
+    public function getImageById($id) {
         $query = "SELECT * FROM " . $this->table . " WHERE gallery_id = :id";
         $stmt = $this->db->prepare($query);
         $stmt->bindParam(':id', $id);
@@ -76,8 +74,7 @@ class GalleryModel
     }
 
     // Update status to "verified" or "rejected"
-    public function updateStatus($id, $status)
-    {
+    public function updateStatus($id, $status) {
         $query = "UPDATE " . $this->table . " SET status = :status WHERE gallery_id = :id";
         $this->db->query($query);
         $this->db->bind('status', $status);
