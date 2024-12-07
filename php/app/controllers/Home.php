@@ -1,5 +1,7 @@
 <?php
 
+require_once "Roadmap.php";
+
 class Home extends Controller{
 
     // Fungsi untuk menginisialisasi user default
@@ -15,7 +17,10 @@ class Home extends Controller{
 
     public function index(){
         $this->initializeDefaultUser();
-        $this->view('main/home');
+        $roadmapController = new Roadmap();
+        $data['roadmaps'] = $roadmapController->groupingRoadmap();
+        $data['allUser'] = $this->model('UsersModel')->getUserByRole(2);
+        $this->view('main/home', $data);
     }
 
     public function agenda(){
