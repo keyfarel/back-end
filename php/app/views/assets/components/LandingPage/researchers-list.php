@@ -1,3 +1,4 @@
+<?php var_dump($data["allUser"]) ?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
